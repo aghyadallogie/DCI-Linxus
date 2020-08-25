@@ -1,0 +1,101 @@
+$mainColor : #312E2F;
+$mainFont : 'Nanum Gothic',
+sans-serif;
+
+.App {
+  text-align: center;
+}
+
+
+nav {
+  min-height: 12vh;
+  color: #16878c;
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 150px;
+  align-items: center;
+
+  .nav-links {
+    width: 24vw;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  h1 {
+    font-size: 20px;
+    text-decoration: underline;
+    color: #16878c;
+  }
+
+  h3 {
+    font-size: 15px;
+
+  }
+
+  li, a {
+    padding-right: 1.3em;
+   color:#16878c ;
+   list-style: none;
+   text-decoration: none;
+   &:hover{
+     text-decoration: underline;
+     color: #DC743D;
+   }
+  }
+ 
+}
+
+.App-main {
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: white;
+  padding-left: 150px;
+  padding-right: 50px;
+
+  .text-div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .intro {
+    color: $mainColor;
+    width: 40vw;
+    font-family: $mainFont;
+    font-size: 2.2em;
+    line-height: 1.3em;
+    
+    letter-spacing: 1px;
+    text-align: left;
+  }
+  
+
+  button {
+    background: #DC743D;
+    padding: 10px 25px;
+    border-radius: 50px;
+    color: white;
+    width: 10vw;
+    margin-left: -15vw;
+    font-family: $mainFont;
+    margin-top: 5vh;
+   
+  }
+
+  button:hover{
+    background: white;
+    color: #DC743D ;
+  }
+
+  p {
+    color: $mainColor;
+    text-align: left;
+    font-family: $mainFont;
+   
+  }
+
+  .chatbot {
+    width: 49vw;
+  }
+}
