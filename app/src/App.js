@@ -5,7 +5,10 @@ import Nav from './components/Nav';
 import Home from './components/Home';
 import About from './components/About';
 import Contact from './components/Contact';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Register from './components/Register';
+import User from './components/User';
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import Login from './components/Login';
 
 
 function App() {
@@ -16,7 +19,16 @@ return(
     <Switch>
     <Route path="/" exact component={Home}/>
     <Route path="/about" component={About}/>
-    <Route path="/contact" component={Contact}></Route>
+    <Route path="/contact" component={Contact}/>
+    <Route path="/login" component={Login}/>
+    <Route path="/register" component={Register}/>
+    <Route path="/account" component={User}/>
+    <Route path="*">
+              <div>
+                <div>Oops - this page does not exist</div>
+                <Link to="/">Back to Login</Link>
+              </div>
+            </Route>
     </Switch>
    
   </div>
