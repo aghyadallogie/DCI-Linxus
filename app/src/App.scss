@@ -1,6 +1,7 @@
 $mainColor : #312E2F;
 $mainFont : 'Nanum Gothic',
 sans-serif;
+$detailColor:#DA513E;
 *{
   font-family: $mainFont;
 }
@@ -41,7 +42,7 @@ nav {
    text-decoration: none;
    &:hover{
      text-decoration: underline;
-     color: #DC743D;
+     color:$detailColor;
    }
   }
  
@@ -74,7 +75,7 @@ nav {
   
 
   button {
-    background: #DC743D;
+    background:$detailColor;
     padding: 10px 25px;
     border-radius: 50px;
     color: white;
@@ -87,7 +88,7 @@ nav {
 
   button:hover{
     background: white;
-    color: #DC743D ;
+    color: $detailColor ;
   }
 
   p {
@@ -114,14 +115,14 @@ nav {
   border-radius: 20px;
   color: #0a4e52;
   border-color: #77c1c5;
-  background: #97B9AB;;
+  border: 2px solid $mainColor;
   .login-details{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 50vw;
-    height: 50vh;
+    min-height: 60vh;
     input{
       height: 4vh;
       margin: 1em;
@@ -130,21 +131,22 @@ nav {
       border-radius: 20px;
       border-color: #16878c;
       border-top-color: #16878c;
+      padding-left: 9px;
     }
     .reg{
-      color: white;
+      color: $mainColor;
     }
     .register{
       border-radius: 50px;
       padding: 0.4em;
       margin: 1em;
-      background-color: #DC743D;
+      background-color: $detailColor;
       color: white;
       width: 10vw;
-      border-color: #DC743D;
+      border-color: $detailColor;
       &:hover{
         background: white;
-    color: #DC743D ;
+    color: $detailColor ;
       }
       
     }
@@ -162,13 +164,20 @@ nav {
   .filter-container{
     display: flex;
     margin-left: 170px;
-    justify-content: center;
     background-color: #97B9AB;
     border-radius: 50px;
     width: 500px;
     height: 470px;
-  
-    
+  flex-direction: column;
+    align-items: center;
+    .filter-user{
+      width: 70%;
+      padding:1vh;
+      margin-top: 2vh;
+      border-radius: 50px;
+      background: #E5E5E5;
+      text-align: center;
+    }
   }
   .user-info{
     display: flex;
@@ -176,7 +185,7 @@ nav {
     align-items: flex-start;
     justify-content: center;
     background-color: #97B9AB;
-    border-radius: 50px;
+    border-radius: 40px;
     width: 300px;
     height: 270px;
     text-align: left;
@@ -200,6 +209,16 @@ nav {
   }
 }
 
+.circle-image{
+  width: 120px;
+    height: 120px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #dd7455;
+}
 .circular-avatar {
   
   width: 100px;
@@ -218,7 +237,22 @@ nav {
   display: flex;
     flex-direction: column;
     align-items: center;
-    height: 60vh;
-    justify-content: space-evenly;
+    min-height: 60vh;
+    justify-content: space-between;
 }
+
+//registation
+form{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  input{padding: 1vh;
+  margin:1vh;
+border-radius: 50px;}
+}
+
+
 

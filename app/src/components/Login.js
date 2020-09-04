@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom'
+import { BrowserRouter as  Link } from 'react-router-dom'
 import { Redirect } from 'react-router-dom';
 
 class LoginForm extends Component {
@@ -38,7 +38,10 @@ class LoginForm extends Component {
             <input type="password" onChange={this.handleCredentialChange} name="password" placeholder=" password" />
             <button type="submit" className='register'>Log in</button>
             <h3 className='reg'>Do not have an account?</h3> 
+            <Link  to="/register">
             <button type="submit" className='register'>Register here</button>
+      </Link>
+            
           </div>
           
           <div className="errors">{this.state.errors}</div>

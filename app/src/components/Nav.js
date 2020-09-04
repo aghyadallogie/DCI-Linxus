@@ -10,13 +10,16 @@ function Nav() {
 
       <ul className="nav-links">
         <Link to="/about">
-          <li>About us</li>
+          <li>About</li>
         </Link>
         <Link to="/contact">
           <li>Contact</li>
         </Link>
         <Link to="/login">
           <li>Login</li>
+        </Link>
+        <Link to="/login">
+          <li>Logout</li>
         </Link>
       </ul>
     </nav>
