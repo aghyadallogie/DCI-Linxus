@@ -34,8 +34,8 @@ class LoginForm extends Component {
         
           <div className='field'>
           <div className="login-details">
-            <input type="text" onChange={this.handleCredentialChange} name="username" placeholder="Username..." />
-            <input type="password" onChange={this.handleCredentialChange} name="password" placeholder="Password..." />
+            <input type="text" onChange={this.handleCredentialChange} name="username" placeholder=" username" />
+            <input type="password" onChange={this.handleCredentialChange} name="password" placeholder=" password" />
             <button type="submit" className='register'>Log in</button>
             <h3 className='reg'>Do not have an account?</h3> 
             <button type="submit" className='register'>Register here</button>

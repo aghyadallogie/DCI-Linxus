@@ -1,7 +1,9 @@
 $mainColor : #312E2F;
 $mainFont : 'Nanum Gothic',
 sans-serif;
-
+*{
+  font-family: $mainFont;
+}
 .App {
   text-align: center;
 }
@@ -147,5 +149,76 @@ nav {
       
     }
   }
+}
+.user-details{
+  display: flex;
+  width: 100vw;
+  min-height: 78vh;
+  align-items: center;
+  justify-content: center;
+  p{
+    padding-left: 2em;
+  }
+  .filter-container{
+    display: flex;
+    margin-left: 170px;
+    justify-content: center;
+    background-color: #97B9AB;
+    border-radius: 50px;
+    width: 500px;
+    height: 470px;
+  
+    
+  }
+  .user-info{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    background-color: #97B9AB;
+    border-radius: 50px;
+    width: 300px;
+    height: 270px;
+    text-align: left;
+    color:$mainColor;
+  }
+
+}
+.logout{
+  text-decoration: none;
+  color: white;
+  width: 5vw;
+  background: #DA633E;
+  text-align: center;
+  height: 3vh;
+  border-radius: 50px;
+  padding:8px;
+  margin-left: 39vw;
+  &:hover{
+    font-size: 3px; 
+    
+  }
+}
+
+.circular-avatar {
+  
+  width: 100px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+.circular-avatar img {
+  width: 100%;
+  height: auto;
+  margin: auto 0;
+}
+
+.image-text{
+  display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 60vh;
+    justify-content: space-evenly;
 }
 
