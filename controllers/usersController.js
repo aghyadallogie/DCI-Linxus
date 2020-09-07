@@ -1,7 +1,6 @@
 const User = require('../model/User');
 
 exports.getUsers = (req, res) => {
-    console.log('here we are !');
     User.find().select('-password -__v').then(users => res.json(users))
         .catch(err => res.status(400).json("Error: " + err));
 }
@@ -20,6 +19,8 @@ exports.addUser = (req, res) => {
 
 exports.searchUsers = (req, res) => {
     const searchParams = req.body.refs;
+    
+    // $and: [ { refs: { $in: val1 } }, { refs: ${in: val2 } ]
     User.find({
         refs: { $in: searchParams },
     })

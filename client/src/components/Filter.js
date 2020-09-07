@@ -1,29 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import DragNDrop from './DragNDrop';
+import { ListGroup, ListGroupItem, Button } from 'reactstrap';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 
 export default function Filter() {
 
     const [results, setResults] = useState([]);
-    const [refs, setRefs] = useState(['asdf', 'fdsa', 'qwer']);
-    const [items, setItems] = useState([
-        { title: 'pool', items: [] },
-        { title: 'filter', items: [] }
-    ]);
+    const [refs, setRefs] = useState([]);
 
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/references')
-            .then(res => {
-                let refs = res.data.map(ref => ref.name)
-                let targetArray = [
-                    { title: 'pool', items: [...refs] },
-                    { title: 'filter', items: [] }
-                ]
-                setItems(items => targetArray)
-            }).catch(err => console.log('error: ', err));
-    }, [])
 
     const config = {
         headers: {
@@ -32,14 +20,14 @@ export default function Filter() {
         }
     };
 
+    const myRefs = useSelector(state => state.ref.filters);
+
     const onSubmit = () => {
         let targetObj = {
-            refs: [...refs]
+            refs: [...myRefs]
         }
         axios.post("http://localhost:5000/api/users/search", targetObj, config)
             .then(res => {
-                console.log('refs', refs);
-                console.log(res);
                 setResults(res.data)
             })
             .catch(err => console.log(err))
@@ -48,24 +36,29 @@ export default function Filter() {
     return (
         <>
             <div className="main">
-                <DragNDrop data={items}
-                    setRefs={setRefs}
-                />
+                <DragNDrop />
             </div>
             <div className="results">
-                <button onClick={onSubmit}>Find!</button>
                 <p>{results.length} found matching the targeted references!</p>
+                <Button onClick={onSubmit}>Find!</Button>
                 {/* {results.length > 0 ? <Link to="/results" className="button" >Results!</Link> : ''} */}
             </div>
-            <div className="results-table">
-                {results.map(result =>
-                    <div className="result-row" key={result.email}>
-                        <div className="no-overflow">
-                            <img className="avatar" src="https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png" />
-                            <p>{result.name}</p>
-                        </div>
-                        <img className="avatar" src="https://maxcdn.icons8.com/Share/icon/p1em/Messaging/message1600.png" />
-                    </div>)}
+            <div className="main">
+                <ListGroup flush style={{ margin: '2rem', width: '40vw' }} >
+                    <TransitionGroup>
+                        {results.map(result => (
+                            <CSSTransition timeout={10000} className="fad" key={result.email}>
+                                <ListGroupItem style={{ display: 'flex', justifyContent: 'space-between' }} >
+                                    <div className="user-info">
+                                        <img className="avatar" src="https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png" />
+                                        <p>{result.name}</p>
+                                    </div>
+                                    <img className="avatar" src="https://maxcdn.icons8.com/Share/icon/p1em/Messaging/message1600.png" />
+                                </ListGroupItem>
+                            </CSSTransition>
+                        ))}
+                    </TransitionGroup>
+                </ListGroup>
             </div>
         </>
     );

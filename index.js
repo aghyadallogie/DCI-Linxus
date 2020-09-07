@@ -16,10 +16,10 @@ const usersRoute = require('./routes/users');
 
 //Connect to DB
 const envconfig = require('./config/config');
-mongoose.connect(process.env.mongoURI,
+mongoose.connect(process.env.mongoURI,      // cannot use config here instead of dotenv
     { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
-    () => console.log('Connected to DB !')
-);
+).then(() => console.log('Connected to DB !')).catch(err => console.log(err));
+
 
 //Set Routes
 app.use('/api/auth', authRoute);
