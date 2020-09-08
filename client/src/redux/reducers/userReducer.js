@@ -1,7 +1,8 @@
-import { GET_USERS } from '../actions/types';
+import { GET_USERS, SEARCH_USERS } from '../actions/types';
 
 const initialState = {
-    users: []
+    users: [],
+    matchingUsers: []
 }
 
 export default function (state = initialState, action) {
@@ -9,6 +10,11 @@ export default function (state = initialState, action) {
         case GET_USERS:
             return {
                 ...state,
+            }
+        case SEARCH_USERS:
+            return {
+                ...state,
+                matchingUsers: action.payload
             }
         default:
             return state;

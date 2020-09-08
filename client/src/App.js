@@ -7,6 +7,7 @@ import Filter from './components/Filter';
 import Results from './components/Results';
 import Home from './components/layout/Home';
 import './App.css';
+import Contact from './components/layout/Contact';
 
 function App() {
   return (
@@ -17,7 +18,8 @@ function App() {
           <Route path="/" exact component={Home} />
           <Route path="/register" component={Register} />
           <Route path="/filter" component={Filter} />
-          {/* <Route path="/results" component={Results} /> */}
+          <Route path="/contact" component={Contact} />
+          <Route path="/results" component={Results} />
         </Switch>
       </div>
     </Router>
