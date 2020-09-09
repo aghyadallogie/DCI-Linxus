@@ -17,7 +17,7 @@ export default function AppNavbar() {
                     <Collapse isOpen={expand} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem>
-                                <NavLink href="/">Login</NavLink>
+                                <NavLink href="/login">Login</NavLink>
                             </NavItem>
                         </Nav>
                     </Collapse>

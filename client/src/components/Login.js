@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
-
+import chatbot2 from '../assets/chatbot2.png'
 function Login(props) {
 
   const { handleSubmit, register, errors } = useForm();
@@ -23,8 +23,11 @@ function Login(props) {
   }
 
   return (
-    <div className="main">
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="main-login"
+        style={{
+         backgroundImage: `url(${chatbot2})`
+      }}>
+      <form onSubmit={handleSubmit(onSubmit)} className='form-login'>
         <div className="input-field">
           <label htmlFor="email"></label>
           <input name="email" placeholder="Email" ref={register({
@@ -45,7 +48,7 @@ function Login(props) {
           {errors.password && <p className="form-error">At least 8 characters long!</p>}
         </div>
 
-        <button type="submit">Login</button>
+        <button type="submit" className='button-login'>Login</button>
       </form>
     </div>
   );

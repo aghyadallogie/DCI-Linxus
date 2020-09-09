@@ -6,16 +6,16 @@ import { Container, Col, Button } from 'reactstrap';
 function Home() {
   return (
     <div className="main">
-      <Col lg="4">
+      <div className='text-div'>
         <h1 className="intro">
           You like a certain activity but you got nobody to share the fun
           with?
           </h1>
         <p>Less personal data from you, more connections from us.</p>
         <Link to="/register">
-          <Button size="lg">Sign up!</Button>
+          <button className='warning'>Sign up!</button>
         </Link>
-      </Col>
+      </div>
       <Col lg="4">
         <img className="chatbot" src={chatbot} alt="animation"></img>
       </Col>

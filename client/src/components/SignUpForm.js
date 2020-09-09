@@ -34,18 +34,18 @@ export default function SignUpForm({ props }) {
     return (
 
         <form onSubmit={handleSubmit(onSubmitForm)}>
-            <FormGroup>
+            
                 <div className="input-field">
-                    <Label htmlFor="name" ></Label>
+                    <label htmlFor="name" ></label>
                     <input name="name" placeholder="Username" ref={register({
                         required: true, minLength: 8
                     })} />
                     {errors.name && <p className="form-error">At least 8 characters long!</p>}
                 </div>
-            </FormGroup>
-            <FormGroup>
+            
+            
                 <div className="input-field">
-                    <Label htmlFor="email"></Label>
+                    <label htmlFor="email"></label>
                     <input name="email" placeholder="Email" ref={register({
                         required: true, pattern: {
                             value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -55,19 +55,19 @@ export default function SignUpForm({ props }) {
                     />
                     {errors.email && <p className="form-error">Must enter a valid Email!</p>}
                 </div>
-            </FormGroup>
-            <FormGroup>
+            
+            
                 <div className="input-field">
-                    <Label htmlFor="password" ></Label>
+                    <label htmlFor="password" ></label>
                     <input type="password" name="password" placeholder="Password" ref={register({ // breaks why type="password" !!!!
                         required: true, minLength: 8
                     })} />
                     {errors.password && <p className="form-error">At least 8 characters long!</p>}
                 </div>
-            </FormGroup>
-            <Button type="submit" color="dark" style={{ marginBottom: '2rem' }} >
+           
+            <button type="submit" className='register' style={{ marginBottom: '2rem' }} >
                 Join Us!
-            </Button>
+            </button>
         </form>
 
     )
