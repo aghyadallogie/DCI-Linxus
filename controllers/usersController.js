@@ -19,11 +19,9 @@ exports.addUser = (req, res) => {
 
 exports.searchUsers = (req, res) => {
     const searchParams = req.body.refs;
-    
-    // $and: [ { refs: { $in: val1 } }, { refs: ${in: val2 } ]
     User.find({
-        refs: { $in: searchParams },
-    })
+        refs: { $all: searchParams },
+    }).select('-password -__v -date')
         .then((users) => res.json(users))
         .catch((err) => res.status(400).json('Error: ' + err));
 };
@@ -40,6 +38,45 @@ exports.loginUser = (req, res) => {
         })
         .catch(err => res.status(400).send(err))
 };
+
+
+
+// exports.loginUser = async (req, res, next) => {
+//     const email = req.body.email;
+//     const password = req.body.password;
+
+//     try {
+//         const user = await User.findOne({ email });
+//         if (!user)
+//             throw new createError(
+//                 404,
+//                 `There is no user account for '${req.body.email}.'`
+//             );
+
+//         const token = user.generateAuthToken();
+//         const canLogin = await user.checkPassword(password);
+//         if (!canLogin)
+//             throw new createError(
+//                 404,
+//                 `Please check your password.`
+//             );
+//         const data = user.getPublicFields();
+//         res
+//             .status(200)
+//             .cookie('token', token, {
+//                 expires: new Date(Date.now() + 604800000),
+//                 secure: false, // if we are not using https
+//                 httpOnly: true,
+//             })
+//             .send(data);
+//     } catch (e) {
+//         next(e);
+//     }
+// };
+
+// exports.authenticateUser = async (req, res, next) => {
+//     res.status(200).send(req.user);
+// }
 
 // exports.loginUser = async (req, res) => {
 //     // //Validate input data using a separate joi validation file

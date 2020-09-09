@@ -13,7 +13,6 @@ export default function (state = initialState, action) {
                 refs: action.payload
             }
         case STORE_FILTERS:
-            console.log(action.payload);
             return {
                 ...state,
                 filters: action.payload

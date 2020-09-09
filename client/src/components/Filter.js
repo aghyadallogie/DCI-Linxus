@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import DragNDrop from './DragNDrop';
-import { ListGroup, ListGroupItem, Button } from 'reactstrap';
-import { TransitionGroup, CSSTransition } from 'react-transition-group';
+import { Button } from 'reactstrap';
+import { searchUsersAction } from '../redux/actions/refActions';
 
 
-export default function Filter() {
-
-    const [results, setResults] = useState([]);
-    const [refs, setRefs] = useState([]);
-
+export default function Filter(props) {
 
     const config = {
         headers: {
@@ -22,15 +16,27 @@ export default function Filter() {
 
     const myRefs = useSelector(state => state.ref.filters);
 
+    const dispatch = useDispatch();
+
+    const myUsers = useSelector(state => state.user.matchingUsers);
+
+    const [numnum, setNumnum] = useState(0);
+
+    useEffect(() => {
+        // we need to reset matchingUsers here before redoing
+        setNumnum(myUsers);
+    }, [myRefs])
+
     const onSubmit = () => {
         let targetObj = {
             refs: [...myRefs]
         }
-        axios.post("http://localhost:5000/api/users/search", targetObj, config)
-            .then(res => {
-                setResults(res.data)
-            })
-            .catch(err => console.log(err))
+        try {
+            dispatch(searchUsersAction(targetObj, config));
+            props.history.push('/results');
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -39,26 +45,8 @@ export default function Filter() {
                 <DragNDrop />
             </div>
             <div className="results">
-                <p>{results.length} found matching the targeted references!</p>
+                <p>{numnum.length} found matching the targeted references!</p>
                 <Button onClick={onSubmit}>Find!</Button>
-                {/* {results.length > 0 ? <Link to="/results" className="button" >Results!</Link> : ''} */}
-            </div>
-            <div className="main">
-                <ListGroup flush style={{ margin: '2rem', width: '40vw' }} >
-                    <TransitionGroup>
-                        {results.map(result => (
-                            <CSSTransition timeout={10000} className="fad" key={result.email}>
-                                <ListGroupItem style={{ display: 'flex', justifyContent: 'space-between' }} >
-                                    <div className="user-info">
-                                        <img className="avatar" src="https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png" />
-                                        <p>{result.name}</p>
-                                    </div>
-                                    <img className="avatar" src="https://maxcdn.icons8.com/Share/icon/p1em/Messaging/message1600.png" />
-                                </ListGroupItem>
-                            </CSSTransition>
-                        ))}
-                    </TransitionGroup>
-                </ListGroup>
             </div>
         </>
     );

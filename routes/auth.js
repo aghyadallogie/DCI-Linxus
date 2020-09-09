@@ -32,6 +32,8 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// router.get('/me', authMiddleware, authController) //useEffect in appJs to check if logged in
+
 router.post('/login', async (req, res) => {
     //Validate input data using a separate joi validation file
     const { error } = loginValidation(req.body);
