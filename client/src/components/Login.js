@@ -16,7 +16,6 @@ function Login(props) {
   const onSubmit = values => {
     axios.post("http://localhost:5000/api/auth/login", values, config)
       .then(res => {
-        console.log(res);
         props.history.push('/filter');
       })
       .catch(err => console.log(err))

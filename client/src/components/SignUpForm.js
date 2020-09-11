@@ -3,10 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
 import { Button, Container, Form, FormGroup, Label, input } from 'reactstrap';
 import axios from 'axios';
+import { registerUser } from '../redux/actions/authActions';
+import { REGISTER_SUCCESS } from '../redux/actions/types';
 
 export default function SignUpForm({ props }) {
 
     const { handleSubmit, register, errors } = useForm();
+
+    const dispatch = useDispatch();
 
     const config = {
         headers: {
@@ -18,17 +22,11 @@ export default function SignUpForm({ props }) {
     const myRefs = useSelector(state => state.ref.filters);
 
     const onSubmitForm = values => {
-        let targetObj = {
+        let registerData = {
             refs: [...myRefs],
             ...values
         }
-        console.log(targetObj);
-        axios.post("http://localhost:5000/api/auth/register", targetObj, config)
-            .then(res => {
-                console.log(res);
-                props.history.push('/filter');
-            })
-            .catch(err => console.log(err))
+        dispatch(registerUser(registerData)); // dispatching type and payload inside this dispatched action
     }
 
     return (

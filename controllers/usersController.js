@@ -1,7 +1,7 @@
 const User = require('../model/User');
 
 exports.getUsers = (req, res) => {
-    User.find().select('-password -__v').then(users => res.json(users))
+    User.find().then(users => res.json(users))  //refactor using 2json methon in the model
         .catch(err => res.status(400).json("Error: " + err));
 }
 
@@ -10,19 +10,18 @@ exports.getUser = (req, res) => {
         .catch(err => res.status(400).json("Error: " + err));
 }
 
-exports.addUser = (req, res) => {
-    const newUser = new User(req.body);
-    newUser.save()
-        .then(() => res.json("User Added!"))
-        .catch(err => res.status(400).json("Error: " + err));
-}
+// exports.addUser = (req, res) => {
+//     const newUser = new User(req.body);
+//     newUser.save()
+//         .then(() => res.json("User Added!"))
+//         .catch(err => res.status(400).json("Error: " + err));
+// }
 
 exports.searchUsers = (req, res) => {
     const searchParams = req.body.refs;
     User.find({
         refs: { $all: searchParams },
-    }).select('-password -__v -date')
-        .then((users) => res.json(users))
+    }).then((users) => res.json(users))
         .catch((err) => res.status(400).json('Error: ' + err));
 };
 
@@ -37,6 +36,23 @@ exports.loginUser = (req, res) => {
             res.header('auth-token', token).send('Logged in using token: ' + token);
         })
         .catch(err => res.status(400).send(err))
+};
+
+exports.addUser = async (req, res, next) => {
+    try {
+        const user = new User(req.body);
+        const token = 'user.generateAuthToken();'
+        await user.save();
+        res.status(200)
+            // .cookie('auth-token', token, {
+            //     expires: new Date(Date.now() + 604800000),
+            //     secure: false, // if we are not using https
+            //     httpOnly: true,
+            // })
+            .send({ user, token });
+    } catch (err) {
+        next(err);
+    }
 };
 
 
