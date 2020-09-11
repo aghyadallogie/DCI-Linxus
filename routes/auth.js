@@ -24,9 +24,11 @@ router.post('/register', async (req, res) => {
         email: req.body.email,
         password: hashPassword
     });
+    
     try {
         const savedUser = await user.save();
-        res.send({ user: user._id });
+        const token = jwt.sign({ _id: user.id }, process.env.SECRET_TOKEN);
+        res.send({ user: user._id, token: token });
     } catch (error) {
         res.status(400).send(error);
     }
@@ -43,9 +45,9 @@ router.post('/login', async (req, res) => {
     if (!user) return res.status(400).send('Email does not exist !')
     //Check if password is correct
     const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if(!validPassword) return res.status(400).send('Invalid password !');
+    if (!validPassword) return res.status(400).send('Invalid password !');
     //Create and assign jwt
-    const token = jwt.sign({_id: user.id}, process.env.SECRET_TOKEN);
+    const token = jwt.sign({ _id: user.id }, process.env.SECRET_TOKEN);
     res.header('auth-token', token).send('Logged in using token: ' + token)
 });
 
