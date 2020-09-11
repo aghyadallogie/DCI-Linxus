@@ -1,13 +1,16 @@
 $mainFont : 'Nanum Gothic',
 sans-serif;
 $mainColor : #312E2F;
+$blue: #16878c;
 $detailColor:#DA513E;
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
-*{
+
+* {
   font-family: $mainFont;
 }
 
@@ -23,50 +26,57 @@ $detailColor:#DA513E;
   padding-top: 50px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
   height: 70vh;
   width: 90vw;
-    margin-left: 6.2em;
-    .text-div {
-      display: flex;
-      flex-direction: column;
-    
-    }
-    .chatbot {
-      width: 42vw;
-    }
+  margin-left: 3.7em;
+
+  .text-div {
+    display: flex;
+    flex-direction: column;
+
+  }
+
+  .chatbot {
+    width: 42vw;
+  }
 }
+
 .intro {
   color: $mainColor;
   width: 40vw;
   font-family: $mainFont;
   font-size: 2.2em;
   line-height: 1.3em;
-  
+
   letter-spacing: 1px;
   text-align: left;
 }
+
 p {
   color: $mainColor;
   text-align: left;
   font-family: $mainFont;
- 
+
 }
-.warning{
-  background:$detailColor;
+
+.warning {
+  background: $detailColor;
   padding: 10px 25px;
   border-radius: 50px;
   color: white;
   width: 10vw;
-  
+
   font-family: $mainFont;
   margin-top: 5vh;
-  &:hover{
+
+  &:hover {
     background: white;
-    color: $detailColor ;
+    color: $detailColor;
   }
- 
+
 }
+
 .user-info {
   display: flex;
   align-items: center;
@@ -79,34 +89,40 @@ form {
   justify-content: space-around;
   align-items: center;
   height: 50vh;
-  border: 4px dotted rgba(49,46,47,0.27);
   padding-top: 1.6em;
-  .input-field{
+
+  .input-field {
     width: 15vw;
     margin: 0.2em;
-    input{
-      
-      
+
+    input {
+
+
       width: 15vw;
       background: #E5E5E5;
-      border-radius: 20px;
+      border: 0.1px solid;
       border-color: #16878c;
       border-top-color: #16878c;
       padding-left: 9px;
+      padding-top: 9px;
+      padding-bottom: 9px;
     }
   }
-  .register, .button-login{
+
+  .register {
     border-radius: 50px;
-      padding: 0.1em;
-      margin: 1em;
-      background-color: $detailColor;
-      color: white;
-      width: 10vw;
-      border-color: $detailColor;
-      &:hover{
-        background: white;
-    color: $detailColor ;
-      }
+    padding: 0.6em;
+    margin: 1em;
+    background-color: $detailColor;
+    color: white;
+    width: 15vw;
+
+    border-color: $detailColor;
+
+    &:hover {
+      background: white;
+      color: $detailColor;
+    }
   }
 }
 
@@ -156,22 +172,29 @@ form {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
- 
-  min-height: 150px;
-  max-height: 35vh;
+  overflow: scroll;
+  min-height: 350px;
+  max-height: 50vh;
   border: 1px solid #d8d8d8;
-  width: 18vw;
+  width: 25vw;
+  //  border-radius: 20px;
+    background: #E5E5E5;
+  
 }
 
 #filter {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  min-height: 100px;
-  width: 12vw;
+  flex-wrap: wrap;
+  min-height: 350px;
+  max-height: 350px;
+  width: 25vw;
   border: 1px solid #d8d8d8;
   margin: 20px;
+   background: #E5E5E5;
+    overflow-x: hidden;
 }
 
 .dnd-group {
@@ -182,7 +205,35 @@ form {
   margin: 0 10px;
   height: 45vh;
   width: 100%;
+     
 }
+#pool::-webkit-scrollbar {
+  width: 4.5px;
+  background-color: #F5F5F5;
+  
+} 
+#filter::-webkit-scrollbar {
+  width: 4.5px;
+  background-color: #F5F5F5;
+  
+} 
+#pool::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+#filter::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+}
+#pool::-webkit-scrollbar-thumb {
+  background-color: $detailColor;
+  outline: 1px solid slategrey;
+  
+}
+#filter::-webkit-scrollbar-thumb {
+  background-color: $detailColor;
+  outline: 1px solid slategrey;
+  
+}
+
 
 .dnd-item {
   border-top: medium solid #d8d8d8;
@@ -193,8 +244,8 @@ form {
   padding: 5px;
   margin: 5px;
   max-height: 50px;
-  width: 150px;
-  background-color: rgb(155, 155, 155);
+  width: 120px;
+  background-color:$blue;
   color: #ffffff;
   font-size: 16px;
 }
@@ -202,24 +253,128 @@ form {
 .dnd-item * {
   margin: 0;
   text-align: center;
+  
 }
 
 .current {
   background-color: #16181d;
 }
 
-nav{
+nav {
   color: $mainColor;
 }
-.main-login{
+
+.main-login {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 70vh;
+  height: 90vh;
   width: 100vw;
-  .form-login{
+
+  .form-login {
     width: 30vw;
     height: 50vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    .form-error {
+      color: red;
+      text-align: left;
+      font-family: "Nanum Gothic", sans-serif;
+      padding-left: 0.5em;
+    }
+  }
+
+  .button-login {
+    border-radius: 50px;
+    padding: 0.6em;
+    margin: 1em;
+    background-color: $detailColor;
+    color: white;
+    width: 15vw;
+    border-color: $detailColor;
+
+    &:hover {
+      background: white;
+      color: $detailColor;
+    }
+  }
+
+  .register-new {
+    width: 25vw;
+    display: flex;
+    justify-content: space-evenly;
+    height: 7vh;
+    align-items: center;
+  }
+
+  .sign-up {
+    text-decoration: none;
+    color: #16878c;
+    font-weight: bold;
+
+    &:hover {
+      text-decoration: none;
+      
+      font-size: 20px;
+    }
+  }
+}
+
+
+
+.about-page {
+  width: 90vw;
+  height: 100vh;
+  display: flex;
+flex-direction: column;
+z-index: 0;
+  .about-main {
+    padding-top: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+    width: 87vw;
+    margin-left: 10em;
+    
+    h1{
+      font-size: 40px ;
+      font-weight: bold;
+      margin-top: 20px;
+      color: $blue;
+      opacity: 100%;
+    }
+    .about-imag-text{
+      display: flex;
+      .text-about{
+        width: 50vw;
+        text-align: justify;
+        margin-right: 39px;
+        margin-top: 19px;
+      }
+    }
+    .connections{
+      width: 40vw;
+      align-self: flex-end;
+      margin-right: 100px;
+      animation: rotation 190s linear infinite;
+      width: 28vw;
+      height: 56vh;
+      justify-self: flex-end;
+      align-self: flex-end;
+      text-align: right;
+      @keyframes rotation {
+        from {
+          transform: rotate(0deg);
+        }
+        to {
+          transform: rotate(359deg);
+        }
+      }
+    }
+
   }
 }

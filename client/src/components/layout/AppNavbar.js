@@ -10,15 +10,22 @@ export default function AppNavbar() {
 
     return (
         <div>
-            <Navbar color="dark" dark expand="sm" className="mb-5">
+            <Navbar color="secondary" dark expand="sm" >
                 <Container>
                     <NavbarBrand href="/">LinxUs</NavbarBrand>
                     <NavbarToggler onClick={toggle} />
                     <Collapse isOpen={expand} navbar>
                         <Nav className="ml-auto" navbar>
+                            <NavItem >
+                                <NavLink href="/about">About</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink href="/contact">Contact</NavLink>
+                            </NavItem>
                             <NavItem>
                                 <NavLink href="/login">Login</NavLink>
                             </NavItem>
+                            
                         </Nav>
                     </Collapse>
                 </Container>
