@@ -3,7 +3,7 @@ import { helpFetchRefs } from '../helpers';
 import { searchUsers } from '../helpers';
 
 export const fetchRefsAction = () => async dispatch => {
-    // dispatch(setRefsLoading());
+
     const response = await helpFetchRefs();
     dispatch({
         type: FETCH_REFS,

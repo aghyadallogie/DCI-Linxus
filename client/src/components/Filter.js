@@ -18,15 +18,6 @@ export default function Filter(props) {
 
     const dispatch = useDispatch();
 
-    const myUsers = useSelector(state => state.user.matchingUsers);
-
-    const [numnum, setNumnum] = useState(0);
-
-    useEffect(() => {
-        // we need to reset matchingUsers here before redoing
-        setNumnum(myUsers);
-    }, [myRefs])
-
     const onSubmit = () => {
         let targetObj = {
             refs: [...myRefs]
@@ -45,7 +36,6 @@ export default function Filter(props) {
                 <DragNDrop />
             </div>
             <div className="results">
-                <p>{numnum.length} found matching the targeted references!</p>
                 <Button onClick={onSubmit}>Find!</Button>
             </div>
         </>

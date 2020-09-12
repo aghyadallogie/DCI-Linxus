@@ -24,11 +24,11 @@ router.post('/register', async (req, res) => {
         email: req.body.email,
         password: hashPassword
     });
-    
+
     try {
         const savedUser = await user.save();
-        const token = jwt.sign({ _id: user.id }, process.env.SECRET_TOKEN);
-        res.send({ user: user._id, token: token });
+        const token = jwt.sign({ id: savedUser._id }, process.env.SECRET_TOKEN);
+        res.send({ user: savedUser._id, token: token });
     } catch (error) {
         res.status(400).send(error);
     }
@@ -37,6 +37,7 @@ router.post('/register', async (req, res) => {
 // router.get('/me', authMiddleware, authController) //useEffect in appJs to check if logged in
 
 router.post('/login', async (req, res) => {
+    console.log('controller used!');
     //Validate input data using a separate joi validation file
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -46,9 +47,12 @@ router.post('/login', async (req, res) => {
     //Check if password is correct
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.status(400).send('Invalid password !');
-    //Create and assign jwt
-    const token = jwt.sign({ _id: user.id }, process.env.SECRET_TOKEN);
-    res.header('auth-token', token).send('Logged in using token: ' + token)
+    try {
+        const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN);
+        res.send({ user: user._id, token: token });
+    } catch (error) {
+        res.status(400).send(error);
+    }
 });
 
 module.exports = router;

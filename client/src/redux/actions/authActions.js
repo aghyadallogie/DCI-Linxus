@@ -10,7 +10,7 @@ export const loadUser = () => (dispatch, getState) => {
     const token = getState().auth.token;
     if (token) {
         axios
-            .get('/api/auth/user', tokenConfig(getState))
+            .get('http://localhost:5000/api/users/me', tokenConfig(getState))
             .then(res => dispatch({
                 type: USER_LOADED,
                 payload: res.data
@@ -26,7 +26,7 @@ export const loadUser = () => (dispatch, getState) => {
 }
 
 // register user
-export const registerUser = registerData => dispatch => {
+export const registerAction = registerData => dispatch => {
     const config = {
         headers: {
             'Content-type': 'application/json'
@@ -47,14 +47,13 @@ export const registerUser = registerData => dispatch => {
 }
 
 // login user
-export const login = loginData => dispatch => {
+export const loginAction = loginData => dispatch => {
     const config = {
         headers: {
             'Content-type': 'application/json'
         }
     }
     const body = JSON.stringify(loginData);
-    console.log('loggin body here: ', body);
 
     axios
         .post('http://localhost:5000/api/auth/login', body, config) // api endpoint
@@ -63,14 +62,14 @@ export const login = loginData => dispatch => {
             payload: res.data
         }))
         .catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
+            // dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
             dispatch({ type: LOGIN_FAIL });
         })
 }
 
 // logout user
 export const logout = () => {
-    return { type: LOGOUT_SUCCESS }
+    return { type: LOGOUT_SUCCESS } // why we return instead of dispatch
 }
 
 // setup config/headers and token

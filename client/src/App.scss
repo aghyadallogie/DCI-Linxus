@@ -1,14 +1,20 @@
-$mainFont : 'Nanum Gothic',
-sans-serif;
+$mainFont : 'Nanum Gothic', sans-serif;
 $mainColor : #312E2F;
 $detailColor:#DA513E;
+
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-}
-*{
   font-family: $mainFont;
+  box-sizing: border-box;
+  outline: none;
+}
+
+a {
+  color: white;
+  &:hover {
+    color: white;
+  }
 }
 
 .app {
@@ -17,6 +23,7 @@ $detailColor:#DA513E;
   justify-content: center;
   height: 100vh;
   width: 100vw;
+  outline: none;
 }
 
 .main {
@@ -26,50 +33,65 @@ $detailColor:#DA513E;
   justify-content: center;
   height: 70vh;
   width: 90vw;
-    margin-left: 6.2em;
-    .text-div {
-      display: flex;
-      flex-direction: column;
-    
-    }
-    .chatbot {
-      width: 42vw;
-    }
+  margin-left: 6.2em;
+
+  .text-div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 25vh;
+  }
+
+  .chatbot {
+    width: 42vw;
+  }
 }
+
 .intro {
   color: $mainColor;
   width: 40vw;
   font-family: $mainFont;
   font-size: 2.2em;
   line-height: 1.3em;
-  
   letter-spacing: 1px;
   text-align: left;
 }
+
+.account-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 p {
   color: $mainColor;
   text-align: left;
   font-family: $mainFont;
- 
 }
-.warning{
-  background:$detailColor;
+
+.warning {
+  background: $detailColor;
   padding: 10px 25px;
   border-radius: 50px;
   color: white;
   width: 10vw;
-  
   font-family: $mainFont;
-  margin-top: 5vh;
-  &:hover{
+
+  &:hover {
     background: white;
-    color: $detailColor ;
+    color: $detailColor;
   }
- 
 }
+
 .user-info {
   display: flex;
   align-items: center;
+}
+
+.account-image {
+  width: 10vw;
+  margin: 30px
 }
 
 form {
@@ -78,35 +100,24 @@ form {
   flex-direction: column;
   justify-content: space-around;
   align-items: center;
-  height: 50vh;
-  border: 4px dotted rgba(49,46,47,0.27);
+  height: 40vh;
+  border: 4px dotted rgba(49, 46, 47, 0.27);
   padding-top: 1.6em;
-  .input-field{
+  
+  input {
+    padding: 10px;
     width: 15vw;
-    margin: 0.2em;
-    input{
-      
-      
-      width: 15vw;
-      background: #E5E5E5;
-      border-radius: 20px;
-      border-color: #16878c;
-      border-top-color: #16878c;
-      padding-left: 9px;
-    }
+    background: #E5E5E5;
+    border-radius: 20px;
+    border-color: #16878c;
+    border-top-color: #16878c;
+    padding-left: 9px;
   }
-  .register, .button-login{
-    border-radius: 50px;
-      padding: 0.1em;
-      margin: 1em;
-      background-color: $detailColor;
-      color: white;
-      width: 10vw;
-      border-color: $detailColor;
-      &:hover{
-        background: white;
-    color: $detailColor ;
-      }
+
+  .form-error {
+    padding-left: 20px;
+    padding-top: 10px;
+    color: red;
   }
 }
 
@@ -156,9 +167,9 @@ form {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: center;
- 
+  overflow-y: scroll;
   min-height: 150px;
-  max-height: 35vh;
+  max-height: 40vh;
   border: 1px solid #d8d8d8;
   width: 18vw;
 }
@@ -208,18 +219,15 @@ form {
   background-color: #16181d;
 }
 
-nav{
+nav {
   color: $mainColor;
 }
-.main-login{
+
+.main-login {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 70vh;
   width: 100vw;
-  .form-login{
-    width: 30vw;
-    height: 50vh;
-  }
 }

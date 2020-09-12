@@ -1,35 +1,28 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { useForm } from "react-hook-form";
-import axios from 'axios';
-import chatbot2 from '../assets/chatbot2.png'
-function Login(props) {
+import { loginAction } from '../redux/actions/authActions';
+import backgroundImage from '../assets/backgroundImage.png';
+
+export default function Login(props) {
 
   const { handleSubmit, register, errors } = useForm();
+  const dispatch = useDispatch();
 
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjMyZTMwYjc5NmFhYjBhZmM0ZjgwMDciLCJpYXQiOjE1OTcxNzA0ODV9.FlXz-nWVMzNt9gxRNXeQ7sxTYQrRLK2cnNYUon-yrm4"
-    }
-  };
-
-  const onSubmit = values => {
-    axios.post("http://localhost:5000/api/auth/login", values, config)
-      .then(res => {
-        props.history.push('/filter');
-      })
-      .catch(err => console.log(err))
+  const onSubmitForm = values => {
+    props.history.push('/filter');
+    dispatch(loginAction(values));
   }
 
   return (
     <div className="main-login"
-        style={{
-         backgroundImage: `url(${chatbot2})`
+      style={{
+        backgroundImage: `url(${backgroundImage})`
       }}>
-      <form onSubmit={handleSubmit(onSubmit)} className='form-login'>
+      <form onSubmit={handleSubmit(onSubmitForm)} className='form-login'>
         <div className="input-field">
           <label htmlFor="email"></label>
-          <input name="email" placeholder="Email" ref={register({
+          <input name="email" autoComplete="off" placeholder="Email" ref={register({
             required: true, pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
               message: "Invalid Email Address!"
@@ -41,16 +34,14 @@ function Login(props) {
 
         <div className="input-field">
           <label htmlFor="password" ></label>
-          <input type="password" name="password" placeholder="Password" ref={register({ // breaks why type="password" !!!!
+          <input type="password" autoComplete="off" name="password" placeholder="Password" ref={register({ // breaks why type="password" !!!!
             required: true, minLength: 8
           })} />
           {errors.password && <p className="form-error">At least 8 characters long!</p>}
         </div>
 
-        <button type="submit" className='button-login'>Login</button>
+        <button type="submit" className='warning'>Login</button>
       </form>
     </div>
   );
 }
-
-export default Login;

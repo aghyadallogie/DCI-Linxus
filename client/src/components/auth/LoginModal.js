@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { login } from '../../redux/actions/authActions';
+import { loginAction } from '../../redux/actions/authActions';
 import { NavLink, Modal, ModalHeader, ModalBody, Alert, Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { clearErrors } from '../../redux/actions/errorActions';
 
@@ -41,7 +41,7 @@ export default function LoginModal() {
         e.preventDefault();
         const { email, password } = loginUser;
         const loginData = { email, password }
-        dispatch(login(loginData));
+        dispatch(loginAction(loginData));
         toggle();
     }
 

@@ -27,6 +27,7 @@ const userSchema = new mongoose.Schema({
         min: 1,
         max: 6
     },
+    imageUrl: String,
     date: {
         type: Date,
         default: Date.now

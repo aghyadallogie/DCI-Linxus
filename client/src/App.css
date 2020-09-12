@@ -1,0 +1,294 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+* {
+  font-family: "Nanum Gothic", sans-serif;
+}
+
+.app {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 100vh;
+  width: 100vw;
+}
+
+.main {
+  padding-top: 50px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 70vh;
+  width: 90vw;
+  margin-left: 6.2em;
+}
+
+.main .text-div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.main .chatbot {
+  width: 42vw;
+}
+
+.intro {
+  color: #312E2F;
+  width: 40vw;
+  font-family: "Nanum Gothic", sans-serif;
+  font-size: 2.2em;
+  line-height: 1.3em;
+  letter-spacing: 1px;
+  text-align: left;
+}
+
+p {
+  color: #312E2F;
+  text-align: left;
+  font-family: "Nanum Gothic", sans-serif;
+}
+
+.warning {
+  background: #DA513E;
+  padding: 10px 25px;
+  border-radius: 50px;
+  color: white;
+  width: 10vw;
+  font-family: "Nanum Gothic", sans-serif;
+  margin-top: 5vh;
+}
+
+.warning:hover {
+  background: white;
+  color: #DA513E;
+}
+
+.user-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+form {
+  width: 20vw;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  height: 50vh;
+  border: 4px dotted rgba(49, 46, 47, 0.27);
+  padding-top: 1.6em;
+}
+
+form .input-field {
+  width: 15vw;
+  margin: 0.2em;
+}
+
+form .input-field input {
+  width: 15vw;
+  background: #E5E5E5;
+  border-radius: 20px;
+  border-color: #16878c;
+  border-top-color: #16878c;
+  padding-left: 9px;
+}
+
+form .register, form .button-login {
+  border-radius: 50px;
+  padding: 0.1em;
+  margin: 1em;
+  background-color: #DA513E;
+  color: white;
+  width: 10vw;
+  border-color: #DA513E;
+}
+
+form .register:hover, form .button-login:hover {
+  background: white;
+  color: #DA513E;
+}
+
+.results {
+  text-align: center;
+}
+
+.chatbot {
+  width: 39vw;
+}
+
+.avatar {
+  margin-right: 20px;
+  width: 30px;
+}
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  -webkit-transition: opacity 1000ms ease-in;
+  transition: opacity 1000ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0.01;
+  -webkit-transition: opacity 1000ms ease-in;
+  transition: opacity 1000ms ease-in;
+}
+
+.drag-n-drop {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  background-color: #ffffff;
+  padding: .5 rem;
+  height: 80%;
+  width: 50vw;
+}
+
+#pool {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  min-height: 150px;
+  max-height: 35vh;
+  border: 1px solid #d8d8d8;
+  width: 18vw;
+}
+
+#filter {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 100px;
+  width: 12vw;
+  border: 1px solid #d8d8d8;
+  margin: 20px;
+}
+
+.dnd-group {
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 11px;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 0 10px;
+  height: 45vh;
+  width: 100%;
+}
+
+.dnd-item {
+  border-top: medium solid #d8d8d8;
+  border-bottom: medium solid #d8d8d8;
+  border-left: medium dotted #d8d8d8;
+  border-right: medium dotted #d8d8d8;
+  text-align: center;
+  padding: 5px;
+  margin: 5px;
+  max-height: 50px;
+  width: 150px;
+  background-color: #9b9b9b;
+  color: #ffffff;
+  font-size: 16px;
+}
+
+.dnd-item * {
+  margin: 0;
+  text-align: center;
+}
+
+.current {
+  background-color: #16181d;
+}
+
+nav {
+  color: #312E2F;
+}
+
+.main-login {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  height: 70vh;
+  width: 100vw;
+}
+
+.main-login .form-login {
+  width: 30vw;
+  height: 50vh;
+}
+/*# sourceMappingURL=App.css.map */
