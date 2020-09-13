@@ -13,6 +13,7 @@ import Contact from './components/layout/Contact';
 import Login from './components/Login';
 import About from './components/layout/About';
 import Account from './components/Account';
+import Logout from './components/auth/Logout';
 
 function App() {
 
@@ -32,7 +33,7 @@ function App() {
           {!isAuthenticated && <Route path="/register" component={Register} />}
           <Route path="/filter" component={Filter} />
           <Route path="/login" component={Login} />
-          {/* <Route path="/results" component={Results} /> */}
+          <Route path="/logout" component={Logout} />
           <Route path="/contact" component={Contact} />
           <Route path="/results" component={Results} />
           <Route path="/about" component={About} />

@@ -23,6 +23,7 @@ function Contact() {
     <div>
       <h3>Contact us</h3>
       {matchingUsers.map(user => <p key={user.id}>{user.name}</p>)}
+      <form></form>
     </div>
   );
 }

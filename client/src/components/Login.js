@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useForm } from "react-hook-form";
 import { loginAction } from '../redux/actions/authActions';
 import backgroundImage from '../assets/backgroundImage.png';
+import { Link } from 'react-router-dom';
 
 export default function Login(props) {
 
@@ -10,8 +11,8 @@ export default function Login(props) {
   const dispatch = useDispatch();
 
   const onSubmitForm = values => {
-    props.history.push('/filter');
     dispatch(loginAction(values));
+    props.history.push('/filter');
   }
 
   return (
@@ -29,7 +30,9 @@ export default function Login(props) {
             }
           })}
           />
-          {errors.email && <p className="form-error">Must enter a valid Email!</p>}
+          {errors.email && (
+            <p className="form-error">Must enter a valid Email!</p>
+          )}
         </div>
 
         <div className="input-field">
@@ -42,6 +45,12 @@ export default function Login(props) {
 
         <button type="submit" className='warning'>Login</button>
       </form>
+      <div className="register-new">
+        <h3>New on LinxUs?</h3>
+        <Link to="/register">
+          <a className='sign-up'>Sign up!</a>
+        </Link>
+      </div>
     </div>
   );
 }

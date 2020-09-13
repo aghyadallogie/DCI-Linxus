@@ -22,11 +22,17 @@ export default function AppNavbar(props) {
                     <NavbarToggler onClick={toggle} />
                     <Collapse isOpen={expand} navbar>
                         <Nav className="ml-auto" navbar>
-                            <NavItem style={{display: 'flex'}}>
-                                {isAuthenticated ? <>
-                                    <NavLink><Link to="/logout">Logout</Link></NavLink>
-                                    <NavLink><Link  to="/account">Account</Link></NavLink>
-                                </> : <NavLink><Link  to="/login">Login</Link></NavLink>}
+                            <NavItem style={{ display: 'flex' }}>
+                                {isAuthenticated ?
+                                    <>
+                                        <NavLink><Link to="/logout">Logout</Link></NavLink>
+                                        <NavLink><Link to="/account">Account</Link></NavLink>
+                                    </> :
+                                    <>
+                                        <NavLink><Link to="/about">About LinxUs</Link></NavLink>
+                                        <NavLink><Link to="/contact">Contact Us</Link></NavLink>
+                                        <NavLink><Link to="/login" className="ml-5">Login</Link></NavLink>
+                                    </>}
                             </NavItem>
                         </Nav>
                     </Collapse>

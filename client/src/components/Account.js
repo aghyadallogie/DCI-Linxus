@@ -1,11 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-// import { useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 export default function Account() {
 
-    const [name, setName] = useState();
+    const userId = useSelector(state => state.auth.user);
+
+    let userImg;
+    if (userId) {
+        userImg = `../../../public/uploads/${userId}.jpg`
+        console.log(userImg);
+    } else {
+        userImg = `https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png`
+    }
+
+    const [name, setName] = useState(userId);
     const [file, setFile] = useState();
+
 
     const headers = {
         'Access-Control-Allow-Origin': 'http://localhost'
@@ -18,18 +30,14 @@ export default function Account() {
         axios.post("http://localhost:5000/api/users/upload", data, { 'headers': headers }).then(res => console.log(res)).catch(err => console.log(err));
     }
 
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    if (!isAuthenticated) return <Redirect to="/" />
+
     return (
-        <div>
+        <div className="container">
             <div className="account-info">
-                <img className="account-image" src="https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png" />
+                <img className="account-image" src={userImg} />
                 <form action="#">
-                    <div className="flex">
-                        <label htmlFor="name">Name</label>
-                        <input type="text" id="name" onChange={e => {
-                            const { value } = e.target;
-                            setName(value);
-                        }} />
-                    </div>
                     <div className="flex">
                         <label htmlFor="file">File</label>
                         <input type="file" id="file" accept=".jpg" onChange={e => {

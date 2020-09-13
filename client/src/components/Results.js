@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { Entries } from './pagination/Entries';
 import { PaginationButtons } from './pagination/PaginationButtons';
 import { Container } from 'reactstrap';
+import { Redirect } from 'react-router-dom';
 
 export default function Results() {
 
@@ -26,6 +27,9 @@ export default function Results() {
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     }
+
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    if (!isAuthenticated) return <Redirect to="/" />
 
     return (
         <Container>

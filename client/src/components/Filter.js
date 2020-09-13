@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import DragNDrop from './DragNDrop';
 import { Button } from 'reactstrap';
 import { searchUsersAction } from '../redux/actions/refActions';
+import { Redirect } from 'react-router-dom';
 
 
 export default function Filter(props) {
@@ -24,11 +25,18 @@ export default function Filter(props) {
         }
         try {
             dispatch(searchUsersAction(targetObj, config));
-            props.history.push('/results');
+            if (myRefs.length > 0) {
+                props.history.push('/results');
+            } else {
+                alert('please enter at least one interest!')
+            }
         } catch (error) {
             console.log(error);
         }
     }
+
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    if (!isAuthenticated) return <Redirect to="/" />
 
     return (
         <>
