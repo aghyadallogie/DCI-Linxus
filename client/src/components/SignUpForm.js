@@ -14,7 +14,12 @@ export default function SignUpForm({ props }) {
             refs: [...myRefs],
             ...values
         }
-        dispatch(registerAction(registerData)); // dispatching type and payload inside this dispatched action
+
+        if (myRefs.length > 0) {
+            dispatch(registerAction(registerData)); // dispatching type and payload inside this dispatched action
+        } else {
+            alert('please enter at least one interest!')
+        }
     }
 
     return (

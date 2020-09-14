@@ -2,9 +2,10 @@ import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOU
 
 const initialState = {
     token: localStorage.getItem('auth-token'),
-    isAuthenticated: null,
+    isAuthenticated: false,
     isLoading: false,
-    user: null
+    user: null,
+    errorMsg: ''
 }
 
 export default function (state = initialState, action) {
@@ -28,9 +29,9 @@ export default function (state = initialState, action) {
                 ...state,
                 ...action.payload, // cuz payload already has user and token sent from api
                 isAuthenticated: true,
-                isLoading: false
+                isLoading: false,
+                errorMsg: '',
             };
-        case AUTH_ERROR:
         case LOGIN_FAIL:
         case LOGOUT_SUCCESS:
         case REGISTER_FAIL:
@@ -40,7 +41,8 @@ export default function (state = initialState, action) {
                 token: null,
                 user: null,
                 isAuthenticated: false,
-                isLoading: false
+                isLoading: false,
+                errorMsg: action.payload
             };
         default:
             return state;

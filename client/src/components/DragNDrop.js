@@ -63,6 +63,22 @@ function DragNDrop() {
         })
     }
 
+    const userRefs = useSelector(state => state.auth.refs); // restoring users filters
+
+    useEffect(() => {
+        if (userRefs && userRefs.length > 0) {
+            setFilter(userRefs);
+        }
+    }, [])
+
+    useEffect(() => {           // removing users filters from pool
+        if (userRefs && userRefs.length > 0) {
+            const legalPool = pool.filter(ref => !userRefs.includes(ref));
+            console.log(legalPool);
+            // setPool(legalPool);
+        }
+    }, [pool])
+
     if (pool.length > 0) {
         return (
             <div className="drag-n-drop" onMouseEnter={(e) => e.target.parentNode.focus()}>

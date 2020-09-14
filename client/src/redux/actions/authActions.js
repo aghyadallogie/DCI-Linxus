@@ -62,14 +62,14 @@ export const loginAction = loginData => dispatch => {
             payload: res.data
         }))
         .catch(err => {
-            // dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
-            dispatch({ type: LOGIN_FAIL });
+            dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
+            dispatch({ type: LOGIN_FAIL, payload: 'we get error msg from api' });
         })
 }
 
 // logout user
 export const logout = () => {
-    return { type: LOGOUT_SUCCESS } // why we return instead of dispatch
+    return { type: LOGOUT_SUCCESS } // we return instead of dispatch because its logout sync
 }
 
 // setup config/headers and token

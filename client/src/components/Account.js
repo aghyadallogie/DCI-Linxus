@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import DragNDrop from './DragNDrop';
 
 export default function Account() {
 
@@ -9,8 +10,7 @@ export default function Account() {
 
     let userImg;
     if (userId) {
-        userImg = `../../../public/uploads/${userId}.jpg`
-        console.log(userImg);
+        userImg = `../../../public/uploads/${userId}.jpg`;
     } else {
         userImg = `https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png`
     }
@@ -34,7 +34,7 @@ export default function Account() {
     if (!isAuthenticated) return <Redirect to="/" />
 
     return (
-        <div className="container">
+        <div className="container flex-row">
             <div className="account-info">
                 <img className="account-image" src={userImg} />
                 <form action="#">
@@ -48,6 +48,8 @@ export default function Account() {
                 </form>
                 <button onClick={upload} className="warning">Upload</button>
             </div>
+            
+            <DragNDrop />
         </div>
     )
 }

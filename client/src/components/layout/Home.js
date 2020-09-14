@@ -1,9 +1,14 @@
 import React from 'react';
 import chatbot from '../../assets/chatbot.png';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { Container, Col, Button } from 'reactstrap';
+import { useSelector } from 'react-redux';
 
 function Home() {
+
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  if (isAuthenticated) return <Redirect to="/filter" />
+
   return (
     <div className="main">
       <div className='text-div'>

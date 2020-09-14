@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const User = require("../model/User");
+const Reference = require("../model/Reference");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const { registerValidation, loginValidation } = require("../validation/joi_validation");
@@ -37,7 +38,6 @@ router.post('/register', async (req, res) => {
 // router.get('/me', authMiddleware, authController) //useEffect in appJs to check if logged in
 
 router.post('/login', async (req, res) => {
-    console.log('controller used!');
     //Validate input data using a separate joi validation file
     const { error } = loginValidation(req.body);
     if (error) return res.status(400).send(error.details[0].message);
@@ -48,8 +48,13 @@ router.post('/login', async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.status(400).send('Invalid password !');
     try {
+        // Reference.find()
+        // .then(references => res.json(references))
+        // .catch(err => res.status(400).json("Error: " + err));
+
         const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN);
-        res.send({ user: user._id, token: token });
+        // const restRefs = user.refs.filter(ref => !user.refs.includes(ref));
+        res.send({ user: user._id, token: token, refs: [...user.refs] });
     } catch (error) {
         res.status(400).send(error);
     }

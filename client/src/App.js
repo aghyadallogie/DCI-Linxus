@@ -24,6 +24,8 @@ function App() {
     dispatch(loadUser());
   }, [])
 
+  
+
   return (
     <Router>
       <div className="App">

@@ -1,19 +1,23 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
 import { loginAction } from '../redux/actions/authActions';
 import backgroundImage from '../assets/backgroundImage.png';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 export default function Login(props) {
 
   const { handleSubmit, register, errors } = useForm();
   const dispatch = useDispatch();
 
+  const errorMsg = useSelector(state => state.auth.errorMsg);
+
   const onSubmitForm = values => {
     dispatch(loginAction(values));
-    props.history.push('/filter');
   }
+ 
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    if (isAuthenticated) return <Redirect to="/filter" />
 
   return (
     <div className="main-login"
@@ -44,6 +48,7 @@ export default function Login(props) {
         </div>
 
         <button type="submit" className='warning'>Login</button>
+        <h1>{errorMsg}</h1>
       </form>
       <div className="register-new">
         <h3>New on LinxUs?</h3>
