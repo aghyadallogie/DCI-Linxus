@@ -14,7 +14,7 @@ export default function AppNavbar(props) {
 
     return (
         <div>
-            <Navbar color="secondary" dark expand="sm" >
+            <Navbar color="dark" dark expand="sm" className="mb-5" >
                 <Container>
                     <NavbarBrand>
                         <NavLink><Link to="/">LinxUs</Link></NavLink>

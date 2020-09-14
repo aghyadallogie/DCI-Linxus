@@ -29,7 +29,12 @@ router.post('/register', async (req, res) => {
     try {
         const savedUser = await user.save();
         const token = jwt.sign({ id: savedUser._id }, process.env.SECRET_TOKEN);
-        res.send({ user: savedUser._id, token: token });
+
+        const rawRefs = await Reference.find();
+        const totalRefs = rawRefs.map(val => val.name);
+        const restRefs = totalRefs.filter(ref => !user.refs.includes(ref));
+
+        res.send({ user: savedUser._id, token: token, refs: [...user.refs], restRefs  });
     } catch (error) {
         res.status(400).send(error);
     }
@@ -48,13 +53,13 @@ router.post('/login', async (req, res) => {
     const validPassword = await bcrypt.compare(req.body.password, user.password);
     if (!validPassword) return res.status(400).send('Invalid password !');
     try {
-        // Reference.find()
-        // .then(references => res.json(references))
-        // .catch(err => res.status(400).json("Error: " + err));
-
         const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN);
-        // const restRefs = user.refs.filter(ref => !user.refs.includes(ref));
-        res.send({ user: user._id, token: token, refs: [...user.refs] });
+
+        const rawRefs = await Reference.find();
+        const totalRefs = rawRefs.map(val => val.name);
+        const restRefs = totalRefs.filter(ref => !user.refs.includes(ref));
+
+        res.send({ user: user._id, token: token, refs: [...user.refs], restRefs });
     } catch (error) {
         res.status(400).send(error);
     }

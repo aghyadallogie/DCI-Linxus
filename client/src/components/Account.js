@@ -49,7 +49,7 @@ export default function Account() {
                 <button onClick={upload} className="warning">Upload</button>
             </div>
             
-            <DragNDrop />
+            <DragNDrop parent='account' />
         </div>
     )
 }

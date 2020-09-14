@@ -2,13 +2,11 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchRefsAction } from '../redux/actions/refActions';
 import { STORE_FILTERS } from '../redux/actions/types';
-// import DragItem from './DragItem';
 
-function DragNDrop() {
+function DragNDrop({parent}) {
 
     const [pool, setPool] = useState([]);
     const [filter, setFilter] = useState([]);
-
     const [dragging, setDragging] = useState(false);
     const dragItem = useRef();
 
@@ -18,12 +16,20 @@ function DragNDrop() {
         dispatch(fetchRefsAction())
     }, [])
 
-    const myRefs = useSelector(state => state.ref.refs);
-    const values = myRefs.map(val => val.name)
+    const restRefs = useSelector(state => state.auth.restRefs);
+    const loggedRefs = useSelector(state => state.auth.refs);
+    
+    const mainRefs = useSelector(state => state.ref.refs);
+    const values = mainRefs.map(val => val.name);
 
     useEffect(() => {
-        setPool(values);
-    }, [myRefs])
+        if (parent === 'account') {
+            setPool(restRefs);
+            setFilter(loggedRefs);
+        } else {
+            setPool(values);
+        }
+    }, [mainRefs]);
 
     const handleDragStart = (e, item, origin) => {
         dragItem.current = { item, origin };
@@ -31,11 +37,9 @@ function DragNDrop() {
             setDragging(true);
         }, 0)
     }
-
     const handleDragEnd = () => {
         setDragging(false);
     }
-
     const handleDrop = (e, containerTarget) => {
         const { item, origin } = dragItem.current
         if (containerTarget == origin) { return }
@@ -63,22 +67,6 @@ function DragNDrop() {
         })
     }
 
-    const userRefs = useSelector(state => state.auth.refs); // restoring users filters
-
-    useEffect(() => {
-        if (userRefs && userRefs.length > 0) {
-            setFilter(userRefs);
-        }
-    }, [])
-
-    useEffect(() => {           // removing users filters from pool
-        if (userRefs && userRefs.length > 0) {
-            const legalPool = pool.filter(ref => !userRefs.includes(ref));
-            console.log(legalPool);
-            // setPool(legalPool);
-        }
-    }, [pool])
-
     if (pool.length > 0) {
         return (
             <div className="drag-n-drop" onMouseEnter={(e) => e.target.parentNode.focus()}>
@@ -88,7 +76,6 @@ function DragNDrop() {
                     onDrop={(e) => handleDrop(e, 'pool')}
                 >
                     {pool.map((reference, index) =>
-                        // <DragItem key={index} reference={reference} original={'pool'} />
                         <div draggable
                             key={index}
                             onDragStart={(e) => handleDragStart(e, reference, 'pool')}
@@ -104,7 +91,6 @@ function DragNDrop() {
                     onDrop={(e) => handleDrop(e, 'filter')}
                 >
                     {filter.map((reference, index) =>
-                        // <DragItem key={index} reference={reference} original={'filter'} />
                         <div draggable
                             key={index}
                             onDragStart={(e) => handleDragStart(e, reference, 'filter')}

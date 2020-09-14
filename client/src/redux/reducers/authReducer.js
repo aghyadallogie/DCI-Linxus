@@ -2,6 +2,8 @@ import { USER_LOADED, USER_LOADING, AUTH_ERROR, LOGIN_SUCCESS, LOGIN_FAIL, LOGOU
 
 const initialState = {
     token: localStorage.getItem('auth-token'),
+    refs: [],
+    restRefs: [],
     isAuthenticated: false,
     isLoading: false,
     user: null,
@@ -33,13 +35,24 @@ export default function (state = initialState, action) {
                 errorMsg: '',
             };
         case LOGIN_FAIL:
-        case LOGOUT_SUCCESS:
         case REGISTER_FAIL:
+            // localStorage.removeItem('auth-token');
+            return {
+                ...state,
+                // token: null,
+                // user: null,
+                // isAuthenticated: false,
+                isLoading: false,
+                errorMsg: action.payload
+            };
+        case LOGOUT_SUCCESS:
             localStorage.removeItem('auth-token');
             return {
                 ...state,
                 token: null,
                 user: null,
+                refs: [],
+                restRefs: [],
                 isAuthenticated: false,
                 isLoading: false,
                 errorMsg: action.payload

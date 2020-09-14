@@ -15,9 +15,9 @@ export default function Login(props) {
   const onSubmitForm = values => {
     dispatch(loginAction(values));
   }
- 
+
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-    if (isAuthenticated) return <Redirect to="/filter" />
+  if (isAuthenticated) return <Redirect to="/filter" />
 
   return (
     <div className="main-login"
@@ -45,10 +45,10 @@ export default function Login(props) {
             required: true, minLength: 8
           })} />
           {errors.password && <p className="form-error">At least 8 characters long!</p>}
+          {errorMsg && <p className="form-error">{errorMsg}</p>}
         </div>
 
         <button type="submit" className='warning'>Login</button>
-        <h1>{errorMsg}</h1>
       </form>
       <div className="register-new">
         <h3>New on LinxUs?</h3>

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { USER_LOADING, USER_LOADED, AUTH_ERROR, REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT_SUCCESS, LOGIN_FAIL, LOGIN_SUCCESS } from '../actions/types';
-import { returnErrors, clearErrors } from './errorActions'
 
 // check token and load user
 
@@ -16,11 +15,9 @@ export const loadUser = () => (dispatch, getState) => {
                 payload: res.data
             }))
             .catch(err => {
-                dispatch(returnErrors(err.response.data, err.response.status));
                 dispatch({ type: AUTH_ERROR });
             })
     } else {
-        dispatch(returnErrors('NO VALID TOKEN!', '400'));
         dispatch({ type: AUTH_ERROR })
     }
 }
@@ -41,7 +38,6 @@ export const registerAction = registerData => dispatch => {
             payload: res.data
         }))
         .catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status, 'REGISTER_FAIL'));
             dispatch({ type: REGISTER_FAIL });
         })
 }
@@ -62,8 +58,7 @@ export const loginAction = loginData => dispatch => {
             payload: res.data
         }))
         .catch(err => {
-            dispatch(returnErrors(err.response.data, err.response.status, 'LOGIN_FAIL'));
-            dispatch({ type: LOGIN_FAIL, payload: 'we get error msg from api' });
+            dispatch({ type: LOGIN_FAIL, payload: err.response.data });
         })
 }
 
