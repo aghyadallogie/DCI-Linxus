@@ -2,6 +2,7 @@ import {
   USER_LOADED,
   USER_LOADING,
   AUTH_ERROR,
+  UPDATE_AVATAR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
   LOGOUT_SUCCESS,
@@ -17,6 +18,7 @@ const initialState = {
   isLoading: false,
   user: null,
   errorMsg: '',
+  imageUrl: '',
 };
 
 export default function (state = initialState, action) {
@@ -45,6 +47,7 @@ export default function (state = initialState, action) {
         isAuthenticated: true,
         isLoading: false,
         errorMsg: '',
+        imageUrl: action.payload.imageUrl,
       };
     case LOGIN_FAIL:
     case REGISTER_FAIL:
@@ -68,6 +71,11 @@ export default function (state = initialState, action) {
         isAuthenticated: false,
         isLoading: false,
         errorMsg: action.payload,
+      };
+    case UPDATE_AVATAR:
+      return {
+        ...state,
+        imageUrl: action.payload,
       };
     default:
       return state;

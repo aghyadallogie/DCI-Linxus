@@ -7,7 +7,8 @@
     "client-install": "cd client && npm install",
     "start": "DEBUG=backend:* nodemon index.js",
     "client": "cd client && npm start",
-    "dev": "concurrently \"npm run start\" \"npm run client\""
+    "dev": "concurrently \"npm run start\" \"npm run client\"",
+    "server": "fuser -k 8000/tcp && nodemon server"
   },
   "keywords": [],
   "author": "",

@@ -54,6 +54,7 @@ router.post('/register', async (req, res) => {
       token: token,
       refs: [...user.refs],
       restRefs,
+      imageUrl: savedUser.imageUrl,
     });
   } catch (error) {
     res.status(400).send(error);
@@ -97,7 +98,7 @@ router.post('/login', async (req, res) => {
       token: token,
       refs: [...user.refs],
       restRefs,
-      userImg: user.imageUrl,
+      imageUrl: user.imageUrl,
     });
   } catch (error) {
     res.status(400).send(error);

@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import DragNDrop from './DragNDrop';
+import { updateAvatarAction } from '../redux/actions/authActions';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function Account() {
   const userId = useSelector((state) => state.auth.user);
   const userImg = useSelector((state) => {
-    return state.auth.userImg;
+    return state.auth.imageUrl;
   });
+  const dispatch = useDispatch();
 
   const [name, setName] = useState(userId);
   const [file, setFile] = useState();
@@ -30,7 +32,7 @@ export default function Account() {
       .then((res) => {
         //here we get the new user info that include the path of the new image
         // we need to make an action that will update the userImg of our state
-        console.log(res.data);
+        dispatch(updateAvatarAction(res.data.imageUrl));
       })
       .catch((err) => console.log(err));
   };
