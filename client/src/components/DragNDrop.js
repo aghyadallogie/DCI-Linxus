@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchRefsAction } from '../redux/actions/refActions';
 import { STORE_FILTERS } from '../redux/actions/types';
 
-function DragNDrop({parent}) {
+function DragNDrop({ parent }) {
 
     const [pool, setPool] = useState([]);
     const [filter, setFilter] = useState([]);
@@ -18,7 +18,7 @@ function DragNDrop({parent}) {
 
     const restRefs = useSelector(state => state.auth.restRefs);
     const loggedRefs = useSelector(state => state.auth.refs);
-    
+
     const mainRefs = useSelector(state => state.ref.refs);
     const values = mainRefs.map(val => val.name);
 
@@ -67,11 +67,35 @@ function DragNDrop({parent}) {
         })
     }
 
-    if (pool.length > 0) {
-        return (
-            <div className="drag-n-drop" onMouseEnter={(e) => e.target.parentNode.focus()}>
+    const findRef = useRef();
+    let untargetted = values.filter(ref => !filter.includes(ref));
 
-                <div className="pool-container" id="pool"
+    const findRefs = e => {
+        if (findRef.current.value === '') {
+            console.log('xello', findRef.current);
+            setPool(untargetted);
+        } else {
+            let targetted = values.filter(ref => ref === e.target.value);
+            setTimeout(() => {
+                setPool(targetted);
+            }, 2000)
+        }
+    }
+
+    const clearFindRefs = () => {
+        findRef.current.value = '';
+        setPool(untargetted);
+    }
+
+    return (
+        <div className="drag-n-drop" onMouseEnter={() => findRef.current.focus()}>
+            <div className="pool-find">
+                <div className="find-ref">
+                    <input ref={findRef} className="input-box" type="text" name="" onChange={e => findRefs(e)} />
+                    <button onClick={clearFindRefs}>clear!</button>
+                </div>
+
+                <div className="pool-container pt-2 pb-2" id="pool"
                     onDragOver={(e) => e.preventDefault()}
                     onDrop={(e) => handleDrop(e, 'pool')}
                 >
@@ -85,24 +109,24 @@ function DragNDrop({parent}) {
                         </div>
                     )}
                 </div>
-
-                <div className="filter-container" id="filter"
-                    onDragOver={(e) => e.preventDefault()}
-                    onDrop={(e) => handleDrop(e, 'filter')}
-                >
-                    {filter.map((reference, index) =>
-                        <div draggable
-                            key={index}
-                            onDragStart={(e) => handleDragStart(e, reference, 'filter')}
-                            onDragEnd={e => handleDragEnd(e, false)}>
-                            <div className="dnd-item">{reference}</div>
-                        </div>
-                    )}
-                </div>
-
             </div>
-        )
-    } else { return null }
+
+            <div className="filter-container" id="filter"
+                onDragOver={(e) => e.preventDefault()}
+                onDrop={(e) => handleDrop(e, 'filter')}
+            >
+                {filter.map((reference, index) =>
+                    <div draggable
+                        key={index}
+                        onDragStart={(e) => handleDragStart(e, reference, 'filter')}
+                        onDragEnd={e => handleDragEnd(e, false)}>
+                        <div className="dnd-item">{reference}</div>
+                    </div>
+                )}
+            </div>
+
+        </div>
+    )
 }
 
 export default DragNDrop;

@@ -1,29 +1,30 @@
-import axios from 'axios';
 import { USER_LOADING, USER_LOADED, AUTH_ERROR, REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT_SUCCESS, LOGIN_FAIL, LOGIN_SUCCESS } from '../actions/types';
+import { helpRegisterUser } from '../helpers/index';
+import { helpLoginUser } from '../helpers/index';
+import { helpFetchMe } from '../helpers/index';
 
-// check token and load user
+export const loadUser = () => async (dispatch, getState) => {
 
-export const loadUser = () => (dispatch, getState) => {
-    // user loading
-    dispatch({ type: USER_LOADING })
-    const token = getState().auth.token;
+    dispatch({ type: USER_LOADING });
+    const token = getState().auth.token; // why user selector then why not always use the same as here ?!
     if (token) {
-        axios
-            .get('http://localhost:5000/api/users/me', tokenConfig(getState))
-            .then(res => dispatch({
+        try {
+            const response = await helpFetchMe();
+            dispatch({
                 type: USER_LOADED,
-                payload: res.data
-            }))
-            .catch(err => {
-                dispatch({ type: AUTH_ERROR });
-            })
+                payload: response.data
+            });
+        } catch (error) {
+            dispatch({
+                type: AUTH_ERROR
+            });
+        }
     } else {
         dispatch({ type: AUTH_ERROR })
     }
 }
 
-// register user
-export const registerAction = registerData => dispatch => {
+export const registerAction = registerData => async dispatch => {
     const config = {
         headers: {
             'Content-type': 'application/json'
@@ -31,19 +32,21 @@ export const registerAction = registerData => dispatch => {
     }
     const body = JSON.stringify(registerData);
 
-    axios
-        .post('http://localhost:5000/api/auth/register', body, config)
-        .then(res => dispatch({
+    try {
+        const response = await helpRegisterUser(body, config);
+        dispatch({
             type: REGISTER_SUCCESS,
-            payload: res.data
-        }))
-        .catch(err => {
-            dispatch({ type: REGISTER_FAIL });
-        })
+            payload: response.data
+        });
+    } catch (error) {
+        dispatch({
+            type: REGISTER_FAIL,
+            payload: error.response.data // not working
+        });
+    }
 }
 
-// login user
-export const loginAction = loginData => dispatch => {
+export const loginAction = loginData => async dispatch => {
     const config = {
         headers: {
             'Content-type': 'application/json'
@@ -51,33 +54,33 @@ export const loginAction = loginData => dispatch => {
     }
     const body = JSON.stringify(loginData);
 
-    axios
-        .post('http://localhost:5000/api/auth/login', body, config) // api endpoint
-        .then(res => dispatch({
+    try {
+        const response = await helpLoginUser(body, config);
+        dispatch({
             type: LOGIN_SUCCESS,
-            payload: res.data
-        }))
-        .catch(err => {
-            dispatch({ type: LOGIN_FAIL, payload: err.response.data });
-        })
+            payload: response.data
+        });
+    } catch (error) {
+        dispatch({
+            type: LOGIN_FAIL,
+            payload: error.response.data // not working
+        });
+    }
 }
 
-// logout user
 export const logout = () => {
     return { type: LOGOUT_SUCCESS } // we return instead of dispatch because its logout sync
 }
 
 // setup config/headers and token
 export const tokenConfig = token => {
-    // get token from localstorage
-
-    //Headers
+    // shouldnt we provide token here ? do we even need this ?
     const config = {
         headers: {
             "Content-type": "application/json"
         }
     }
-    // if theres a token add it to headers
+
     if (token) {
         config.headers['auth-token'] = token;
     }

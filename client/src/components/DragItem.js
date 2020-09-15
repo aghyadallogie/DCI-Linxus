@@ -6,7 +6,6 @@ export default function DragItem({ reference, original }) {
     const dragItem = useRef();
 
     const handleDragStart = (e, item, original) => {
-        console.log({item, original});
         dragItem.current = { item, original };
         setTimeout(() => {
             setDragging(true);

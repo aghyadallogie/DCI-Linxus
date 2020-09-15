@@ -11,7 +11,6 @@ const User = require('../model/User');
 // }
 
 exports.getMe = (req, res) => {
-    console.log('logged in user id : ', req.user.id);
     User.findById(req.user.id).then(users => res.json(users))
         .catch(err => res.status(400).json("Error: " + err));
 }
@@ -32,7 +31,6 @@ exports.searchUsers = (req, res) => {
 //         }).then(user => {
 //             if (req.body.password !== user.password) return res.status(400).send('Invalid password !');
 //         }).then(user => {
-//             console.log('token sign used!');
 
 //             const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN);
 //             res.header('auth-token', token).send('Logged in using token: ' + token);

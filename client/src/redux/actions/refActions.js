@@ -13,7 +13,6 @@ export const fetchRefsAction = () => async dispatch => {
 
 export const searchUsersAction = (A, B) => async dispatch => {
     const response = await searchUsers(A, B);
-    console.log(response.data);
     dispatch({
         type: SEARCH_USERS,
         payload: response.data

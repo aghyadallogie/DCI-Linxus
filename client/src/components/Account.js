@@ -18,7 +18,6 @@ export default function Account() {
     const [name, setName] = useState(userId);
     const [file, setFile] = useState();
 
-
     const headers = {
         'Access-Control-Allow-Origin': 'http://localhost'
     }
@@ -27,7 +26,7 @@ export default function Account() {
         const data = new FormData();
         data.append("name", name);
         data.append("file", file);
-        axios.post("http://localhost:5000/api/users/upload", data, { 'headers': headers }).then(res => console.log(res)).catch(err => console.log(err));
+        axios.post("http://localhost:5000/api/users/upload", data, { 'headers': headers }).then(res => console.log(res)).catch(err => console.log(err));  // can i use dispatch here also sense?
     }
 
     const isAuthenticated = useSelector(state => state.auth.isAuthenticated);

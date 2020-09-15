@@ -1,8 +1,8 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
-import { loginAction } from '../redux/actions/authActions';
-import backgroundImage from '../assets/backgroundImage.png';
+import { loginAction } from '../../redux/actions/authActions';
+import backgroundImage from '../../assets/backgroundImage.png';
 import { Link, Redirect } from 'react-router-dom';
 
 export default function Login(props) {

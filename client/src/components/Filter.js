@@ -8,6 +8,8 @@ import { Redirect } from 'react-router-dom';
 
 export default function Filter(props) {
 
+    const [error, setError] = useState('');
+
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -28,10 +30,10 @@ export default function Filter(props) {
             if (myRefs.length > 0) {
                 props.history.push('/results');
             } else {
-                alert('please enter at least one interest!')
+                setError('Please enter at least one interest!');
             }
         } catch (error) {
-            console.log(error);
+            console.log(error); // does it make sense to use dispatch here as well ?
         }
     }
 
@@ -44,7 +46,8 @@ export default function Filter(props) {
                 <DragNDrop />
             </div>
             <div className="results">
-                <Button onClick={onSubmit}>Find!</Button>
+                {error && <p className="form-error" style={{ textAlign: "center" }}>{error}</p>}
+                <button className="warning mt-0" onClick={onSubmit}>Find!</button>
             </div>
         </>
     );

@@ -109,9 +109,8 @@ form {
     width: 15vw;
     margin: 0.2em;
 
-    input {
-
-
+    input,
+    .input-box {
       width: 15vw;
       background: #E5E5E5;
       border: 0.1px solid;
@@ -137,6 +136,38 @@ form {
       background: white;
       color: $detailColor;
     }
+  }
+}
+
+.input-box {
+  width: 15vw;
+  background: #E5E5E5;
+  border: 0.1px solid;
+  border-color: #16878c;
+  border-top-color: #16878c;
+  padding-left: 9px;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+.pool-find {
+  display: flex;
+  flex-direction: column;
+}
+
+.find-ref {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  input {
+    width: 80%;
+  }
+
+  button {
+    background: #E5E5E5;
+    border-color: #16878c;
+    width: 20%
   }
 }
 
