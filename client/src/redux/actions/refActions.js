@@ -1,6 +1,5 @@
-import { FETCH_REFS, SEARCH_USERS } from './types';
-import { helpFetchRefs } from '../helpers';
-import { searchUsers } from '../helpers';
+import { FETCH_REFS, SEARCH_USERS, PATCH_REFS } from './types';
+import { helpFetchRefs, searchUsers, patchUserRefs } from '../helpers';
 
 export const fetchRefsAction = () => async dispatch => {
 
@@ -15,6 +14,14 @@ export const searchUsersAction = (A, B) => async dispatch => {
     const response = await searchUsers(A, B);
     dispatch({
         type: SEARCH_USERS,
+        payload: response.data
+    })
+}
+
+export const updateUserRefs = (updatedrefs, userId) => async dispatch => {
+    const response = await patchUserRefs(updatedrefs, userId);
+    dispatch({
+        type: PATCH_REFS,
         payload: response.data
     })
 }

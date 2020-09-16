@@ -17,6 +17,7 @@ export default function Login(props) {
   }
 
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  console.log('redirection now!', isAuthenticated);
   if (isAuthenticated) return <Redirect to="/filter" />
 
   return (

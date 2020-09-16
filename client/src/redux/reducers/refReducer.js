@@ -1,5 +1,4 @@
-import { FETCH_REFS } from '../actions/types';
-import { STORE_FILTERS } from '../actions/types';
+import { FETCH_REFS, STORE_FILTERS, PATCH_REFS } from '../actions/types';
 
 const initialState = {
     refs: ['Aghy', 'Julia', 'Joao']
@@ -16,6 +15,12 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 filters: action.payload
+            }
+        case PATCH_REFS:
+            console.log('yo yo', action.payload);
+            return {
+                ...state,
+                refs: action.payload
             }
         default:
             return state;

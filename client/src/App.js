@@ -24,23 +24,23 @@ export default function App() {
     dispatch(loadUser());
   }, [])
 
-  // if (!isAuthenticated) return <Redirect to="/" />  supposed to guard routes
-
   return (
     <div className="App">
       <AppNavbar />
       <Switch>
         <Route path="/" exact component={Home} />
-        {!isAuthenticated && <Route path="/register" component={Register} />}
-        <Route path="/filter" component={Filter} />
-        <Route path="/login" component={Login} />
-        <Route path="/logout" component={Logout} />
         <Route path="/contact" component={Contact} />
-        <Route path="/results" component={Results} />
         <Route path="/about" component={About} />
-        <Route path="/account" component={Account} />
-        {/* {!isAuthenticated && <Route path="/login" component={Login} />} */}
-        <Route path="*"><Redirect to="/filter" /></Route>
+        {isAuthenticated ? <>
+          <Route path="/filter" component={Filter} />
+          <Route path="/logout" component={Logout} />
+          <Route path="/account" component={Account} />
+          <Route path="/results" component={Results} />
+        </> : <>
+            <Route path="/login" component={Login} />
+            <Route path="/register" component={Register} />
+          </>
+        }
       </Switch>
     </div>
   );

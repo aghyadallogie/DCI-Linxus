@@ -6,21 +6,22 @@ import { helpFetchMe } from '../helpers/index';
 export const loadUser = () => async (dispatch, getState) => {
 
     dispatch({ type: USER_LOADING });
-    const token = getState().auth.token; // why user selector then why not always use the same as here ?!
+
+    const token = getState().auth.token || localStorage.getItem("auth-token"); // why user selector then why not always use the same as here ?!
     if (token) {
         try {
-            const response = await helpFetchMe();
+            const response = await helpFetchMe(tokenConfig(token));
+            console.log('fetchin worked!');
             dispatch({
                 type: USER_LOADED,
                 payload: response.data
             });
         } catch (error) {
+            console.log('fetchin failed!');
             dispatch({
                 type: AUTH_ERROR
             });
         }
-    } else {
-        dispatch({ type: AUTH_ERROR })
     }
 }
 
@@ -82,7 +83,7 @@ export const tokenConfig = token => {
     }
 
     if (token) {
-        config.headers['auth-token'] = token;
+        config.headers['auth-token'] = token;  // try this on other objs
     }
     return config;
 }

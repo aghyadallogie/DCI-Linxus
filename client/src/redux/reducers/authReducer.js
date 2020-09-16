@@ -1,12 +1,13 @@
 import { USER_LOADED, USER_LOADING, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL, AUTH_ERROR } from '../actions/types';
 
 const initialState = {
-    token: localStorage.getItem('auth-token'),
-    refs: [],
-    restRefs: [],
+    // token: localStorage.getItem('auth-token'),
     isAuthenticated: false,
     isLoading: false,
-    user: null,
+    user: {
+        refs: [],
+        restRefs: [],
+    },
     errorMsg: ''
 }
 
@@ -22,27 +23,31 @@ export default function (state = initialState, action) {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
-                user: action.payload
+                user: { ...state.user, ...action.payload },
+                errorMsg: ''
             };
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
             localStorage.setItem('auth-token', action.payload.token);
-            return {
+            let newState =
+            {
                 ...state,
-                ...action.payload, // cuz payload already has user and token sent from api
+                token: localStorage.getItem('auth-token'),
+                user: { ...state.user, ...action.payload }, // cuz payload already has user and token sent from api
                 isAuthenticated: true,
                 isLoading: false,
                 errorMsg: '',
             };
+            return newState;
         case AUTH_ERROR:
         case LOGIN_FAIL:
         case REGISTER_FAIL:
-            // localStorage.removeItem('auth-token');
+            localStorage.removeItem('auth-token');
             return {
                 ...state,
-                // token: null,
-                // user: null,
-                // isAuthenticated: false,
+                token: null,
+                user: null,
+                isAuthenticated: false,
                 isLoading: false,
                 errorMsg: action.payload
             };

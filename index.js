@@ -26,6 +26,9 @@ app.use('/api/auth', authRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/references', referenceRoute);
 
+// define static dir
+app.use('/avatars', express.static('public/uploads'));
+
 //App port
 const port = envconfig.PORT || 5000;
 app.listen(port, () => console.log(`Server up and running on port ${port}`));

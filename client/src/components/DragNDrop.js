@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRefsAction } from '../redux/actions/refActions';
+import { fetchRefsAction, updateUserRefs } from '../redux/actions/refActions';
 import { STORE_FILTERS } from '../redux/actions/types';
 
 function DragNDrop({ parent }) {
@@ -16,8 +16,8 @@ function DragNDrop({ parent }) {
         dispatch(fetchRefsAction())
     }, [])
 
-    const restRefs = useSelector(state => state.auth.restRefs);
-    const loggedRefs = useSelector(state => state.auth.refs);
+    const restRefs = useSelector(state => state.auth.user.restRefs);
+    const loggedRefs = useSelector(state => state.auth.user.refs);
 
     const mainRefs = useSelector(state => state.ref.refs);
     const values = mainRefs.map(val => val.name);
@@ -67,24 +67,47 @@ function DragNDrop({ parent }) {
         })
     }
 
+    // useDebounce custom hook
+    // const useDebounce = (value, timeout) => {
+    //     let [debouncedValue, setDebouncedValue] = useState(value);
+
+    //     useEffect(() => {
+    //         let timeoutId = setTimeout(() => {
+    //             setDebouncedValue(value);
+    //         }, timeout)
+    //         return () => {
+    //             clearTimeout(timeoutId);
+    //         }
+    //     }, [value, timeout]);
+
+    //     return debouncedValue;
+    // }
+
     const findRef = useRef();
     let untargetted = values.filter(ref => !filter.includes(ref));
 
     const findRefs = e => {
         if (findRef.current.value === '') {
-            console.log('xello', findRef.current);
             setPool(untargetted);
         } else {
-            let targetted = values.filter(ref => ref === e.target.value);
-            setTimeout(() => {
-                setPool(targetted);
-            }, 2000)
+            let targetted = values.filter(ref => ref.includes(e.target.value));
+            setPool(targetted);
         }
     }
 
     const clearFindRefs = () => {
         findRef.current.value = '';
         setPool(untargetted);
+    }
+
+    const userId = useSelector(state => state.auth.user._id);
+
+    const updateRefs = () => {
+        if (filter.length > 0) {
+            dispatch(updateUserRefs(filter, userId)); // dispatching type and payload inside this dispatched action
+        } else {
+            alert('Please enter at least one interest!');
+        }
     }
 
     return (
@@ -124,7 +147,7 @@ function DragNDrop({ parent }) {
                     </div>
                 )}
             </div>
-
+            {parent === 'account' && <button onClick={updateRefs} className='warning' style={{ marginBottom: '2rem' }} >Update</button>}
         </div>
     )
 }
