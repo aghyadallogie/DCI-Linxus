@@ -10,7 +10,20 @@ const User = require('../model/User');
 //         .catch(err => res.status(400).json("Error: " + err));
 // }
 
+
+exports.patchUserRefs = (req, res) => {
+    const id = req.params.id;
+    const updatedRefs = req.body;
+    console.log(id);
+
+    User.findById(req.params.id).then(user => {
+        user.update({ refs: updatedRefs });
+        res.json(user)
+    }).catch(err => res.status(400).json("Error: " + err));
+}
+
 exports.getMe = (req, res) => {
+    console.log(req.body);
     User.findById(req.user.id).then(users => res.json(users))
         .catch(err => res.status(400).json("Error: " + err));
 }

@@ -10,4 +10,4 @@ export const helpRegisterUser = async (body, config) => await axios.post("http:/
 
 export const helpLoginUser = async (body, config) => await axios.post("http://localhost:5000/api/auth/login", body, config);
 
-export const patchUserRefs = async (data, userId) => await axios.patch(`http://localhost:5000/api/references/${userId}`, data);
+export const patchUserRefs = async (data, userId) => await axios.patch(`http://localhost:5000/api/users/${userId}`, data);

@@ -30,7 +30,6 @@ export default function AppNavbar(props) {
                                     </> :
                                     <>
                                         <NavLink><Link to="/about">About LinxUs</Link></NavLink>
-                                        <NavLink><Link to="/contact">Contact Us</Link></NavLink>
                                         <NavLink><Link to="/login" className="ml-5">Login</Link></NavLink>
                                     </>}
                             </NavItem>

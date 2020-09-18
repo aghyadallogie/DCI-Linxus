@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
 import { registerAction } from '../redux/actions/authActions';
 
-export default function SignUpForm({ props }) {
+export default function SignUpForm() {
 
     const [error, setError] = useState('');
 

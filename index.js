@@ -13,6 +13,7 @@ dotenv.config();
 const authRoute = require('./routes/auth');
 const referenceRoute = require('./routes/references');
 const usersRoute = require('./routes/users');
+const mailRoute = require('./routes/mail');
 
 //Connect to DB
 const envconfig = require('./config/config');
@@ -25,6 +26,8 @@ mongoose.connect(process.env.mongoURI,      // cannot use config here instead of
 app.use('/api/auth', authRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/references', referenceRoute);
+
+app.use('/api/mail', mailRoute);
 
 // define static dir
 app.use('/avatars', express.static('public/uploads'));

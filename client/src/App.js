@@ -9,7 +9,6 @@ import Register from './components/Register';
 import Filter from './components/Filter';
 import Results from './components/Results';
 import Home from './components/layout/Home';
-import Contact from './components/layout/Contact';
 import Login from './components/auth/Login';
 import About from './components/layout/About';
 import Account from './components/Account';
@@ -29,18 +28,17 @@ export default function App() {
       <AppNavbar />
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/contact" component={Contact} />
         <Route path="/about" component={About} />
-        {isAuthenticated ? <>
-          <Route path="/filter" component={Filter} />
-          <Route path="/logout" component={Logout} />
-          <Route path="/account" component={Account} />
-          <Route path="/results" component={Results} />
-        </> : <>
-            <Route path="/login" component={Login} />
-            <Route path="/register" component={Register} />
-          </>
-        }
+        <Route path="/logout" component={Logout} />
+        {isAuthenticated && <Route path="/filter" component={Filter} />}
+        {isAuthenticated && <Route path="/account" component={Account} />}
+        {isAuthenticated && <Route path="/results" component={Results} />}
+        {!isAuthenticated && <Route exact path="/login" component={Login} />}
+        {!isAuthenticated && <Route exact path="/register" component={Register} />}
+        {/* Redirect all */}
+        <Route path="/*">
+          <Redirect to="/" />
+        </Route>
       </Switch>
     </div>
   );

@@ -4,6 +4,7 @@ import { helpLoginUser } from '../helpers/index';
 import { helpFetchMe } from '../helpers/index';
 
 export const loadUser = () => async (dispatch, getState) => {
+    console.log('load user dispatched!');
 
     dispatch({ type: USER_LOADING });
 
@@ -11,7 +12,7 @@ export const loadUser = () => async (dispatch, getState) => {
     if (token) {
         try {
             const response = await helpFetchMe(tokenConfig(token));
-            console.log('fetchin worked!');
+            console.log('fetchin worked!', response.data);
             dispatch({
                 type: USER_LOADED,
                 payload: response.data
@@ -57,6 +58,7 @@ export const loginAction = loginData => async dispatch => {
 
     try {
         const response = await helpLoginUser(body, config);
+        console.log('loggin in action data: ', response.data);
         dispatch({
             type: LOGIN_SUCCESS,
             payload: response.data

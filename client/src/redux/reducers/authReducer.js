@@ -1,12 +1,12 @@
 import { USER_LOADED, USER_LOADING, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL, AUTH_ERROR } from '../actions/types';
 
 const initialState = {
-    // token: localStorage.getItem('auth-token'),
     isAuthenticated: false,
     isLoading: false,
     user: {
         refs: [],
         restRefs: [],
+        _id: null
     },
     errorMsg: ''
 }
@@ -16,20 +16,24 @@ export default function (state = initialState, action) {
         case USER_LOADING:
             return {
                 ...state,
+                token: localStorage.getItem('auth-token'),
                 isLoading: true
             };
         case USER_LOADED:
-            return {
+            let loadedState = {
                 ...state,
                 isAuthenticated: true,
                 isLoading: false,
                 user: { ...state.user, ...action.payload },
                 errorMsg: ''
             };
+            console.clear()
+            console.log('state after loaded: ', loadedState);
+            return loadedState;
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
             localStorage.setItem('auth-token', action.payload.token);
-            let newState =
+            let loggedState =
             {
                 ...state,
                 token: localStorage.getItem('auth-token'),
@@ -38,7 +42,8 @@ export default function (state = initialState, action) {
                 isLoading: false,
                 errorMsg: '',
             };
-            return newState;
+            console.log('state after loggedin: ', loggedState);
+            return loggedState;
         case AUTH_ERROR:
         case LOGIN_FAIL:
         case REGISTER_FAIL:
@@ -56,9 +61,10 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 token: null,
-                user: null,
-                refs: [],
-                restRefs: [],
+                user: {
+                    refs: [],
+                    restRefs: [],
+                },
                 isAuthenticated: false,
                 isLoading: false,
                 errorMsg: action.payload

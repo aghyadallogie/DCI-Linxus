@@ -4,14 +4,14 @@ const verify = require("./verifyToken");
 const multer = require('multer');
 const fs = require('fs');
 const { promisify } = require('util');
-const { searchUsers, getMe } = require("../controllers/usersController");
+const { searchUsers, getMe, patchUserRefs } = require("../controllers/usersController");
 // const upload = require("../middleware/upload");
 
 // router.route('/').get( getUsers);
 // router.route('/:id').get(verify, getUser);
 router.route('/search').post(verify, searchUsers);
 router.route('/me').get(verify, getMe);
-
+router.route('/:id').patch(patchUserRefs);
 
 const upload = multer();
 const pipeline = promisify(require('stream').pipeline);

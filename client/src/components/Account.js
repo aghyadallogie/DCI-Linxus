@@ -3,20 +3,18 @@ import axios from 'axios';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import DragNDrop from './DragNDrop';
+import { set } from 'mongoose';
 
 export default function Account() {
 
     const userId = useSelector(state => state.auth.user._id);
-
-    let userImg;
-    if (userId) {
-        userImg = `http://localhost:5000/avatars/${userId}.jpg`;
-    } else {
-        userImg = `https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png`
-    }
-
     const [name, setName] = useState(userId);
     const [file, setFile] = useState();
+    const [accImg, setAccImg] = useState(`http://localhost:5000/avatars/${userId}.jpg`);
+
+    // useEffect(() => {
+    //     setAccImg(`http://localhost:5000/avatars/${userId}.jpg`);
+    // }, [file, accImg, setAccImg])
 
     const headers = {
         'Access-Control-Allow-Origin': 'http://localhost'
@@ -26,8 +24,15 @@ export default function Account() {
         const data = new FormData();
         data.append("name", name);
         data.append("file", file);
-        axios.post("http://localhost:5000/api/users/upload", data, { 'headers': headers }).then(res => console.log(res)).catch(err => console.log(err));  // can i use dispatch here also sense?
+        const imgurl = `http://localhost:5000/avatars/${userId}.jpg`;
+        axios
+            .post("http://localhost:5000/api/users/upload", data, { 'headers': headers })
+            .then(res => setAccImg(accImg   + '?')
+            ).catch(err => console.log(err))
     }
+
+    console.log('rerendering')
+
 
     return (
         <div className="container flex-row">
@@ -35,7 +40,7 @@ export default function Account() {
                 <form action="#">
                     <div className="flex">
                         <label htmlFor="file">
-                            <img className="account-image" src={userImg} />
+                            <img className="account-image" src={accImg} />
                         </label>
                         <input style={{ visibility: 'hidden' }} type="file" id="file" accept=".jpg" onChange={e => {
                             const file = e.target.files[0];
