@@ -10,14 +10,14 @@ export const Entries = ({ users, loading }) => {
     console.log('entries: ', userId);
     if (loading) return <h3>Loading ..</h3>;
 
-    const handleMail = () => {
+    const handleMail = (user) => {
 
-        const body = JSON.stringify({ userId });
+        const body = JSON.stringify( user );
         const headers = {
             "Content-type": "application/json"
         }
 
-        Axios.post("http://localhost:5000/api/mail", userId, headers);
+        Axios.post("http://localhost:5000/api/mail", body, headers);
     }
 
     return (
@@ -26,10 +26,10 @@ export const Entries = ({ users, loading }) => {
                 <CSSTransition timeout={10000} className="fad" key={user.email}>
                     <ListGroupItem style={{ display: 'flex', justifyContent: 'space-between' }} >
                         <div className="user-info">
-                            <img className="avatar" src={`http://localhost:5000/avatars/${userId._id}.jpg`} />
+                            <img className="avatar" src={`http://localhost:5000/avatars/${user._id}.jpg`} />
                             <p>{user.name}</p>
                         </div>
-                        <img className="avatar pt-1" onClick={handleMail} src="https://maxcdn.icons8.com/Share/icon/p1em/Messaging/message1600.png" />
+                        <img className="avatar pt-1" onClick={handleMail(user)} src="https://maxcdn.icons8.com/Share/icon/p1em/Messaging/message1600.png" />
                     </ListGroupItem>
                 </CSSTransition>
             )}

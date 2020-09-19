@@ -17,10 +17,10 @@ export default function SignUpForm() {
             ...values
         }
 
-        if (myRefs.length > 0) {
+        if (myRefs.length > 0 && myRefs.length < 8) {
             dispatch(registerAction(registerData)); // dispatching type and payload inside this dispatched action
         } else {
-            setError('Please enter at least one interest!');
+            setError('Your interests should be between 1 and 7!');
         }
     }
 
