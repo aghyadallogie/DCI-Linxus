@@ -12,10 +12,6 @@ export default function Account() {
     const [file, setFile] = useState();
     const [accImg, setAccImg] = useState(`http://localhost:5000/avatars/${userId}.jpg`);
 
-    // useEffect(() => {
-    //     setAccImg(`http://localhost:5000/avatars/${userId}.jpg`);
-    // }, [file, accImg, setAccImg])
-
     const headers = {
         'Access-Control-Allow-Origin': 'http://localhost'
     }
@@ -37,8 +33,9 @@ export default function Account() {
     return (
         <div className="container flex-row">
             <div className="account-info">
-                <form action="#">
+                <form action="#" className="img-form">
                     <div className="flex">
+                        <h2 style={{paddingBottom: '30px'}}>Click on image to change</h2>
                         <label htmlFor="file">
                             <img className="account-image" src={accImg} />
                         </label>

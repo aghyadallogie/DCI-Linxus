@@ -11,19 +11,19 @@ const User = require('../model/User');
 // }
 
 
-exports.patchUserRefs = (req, res) => {
-    const id = req.params.id;
-    const updatedRefs = req.body;
-    console.log(id);
+exports.patchUserRefs = async (req, res) => {
 
-    User.findById(req.params.id).then(user => {
-        user.update({ refs: updatedRefs });
-        res.json(user)
-    }).catch(err => res.status(400).json("Error: " + err));
+    try {
+        const updatedRefs = req.body;
+        const newUser = await User.findByIdAndUpdate(req.params.id, { refs: updatedRefs }, { new: true });
+        if (!newUser) return res.status(400).json("Error! No User With That ID");
+        res.status(200).send(newUser.refs);
+    } catch (error) {
+        res.status(400).json("Error: " + err)
+    }
 }
 
 exports.getMe = (req, res) => {
-    console.log(req.body);
     User.findById(req.user.id).then(users => res.json(users))
         .catch(err => res.status(400).json("Error: " + err));
 }

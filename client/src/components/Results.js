@@ -33,7 +33,7 @@ export default function Results() {
 
     return (
         <Container>
-            <h1 className="text-primary mb-3">Results</h1>
+            <h1 className="text-primary mb-4">Contacts that meet your references</h1>
             <Entries users={currentEntries} loading={loading} />
             <PaginationButtons entriesPerPage={entriesPerPage} totalEntries={matchingUsers.length} paginate={paginate} />
         </Container>

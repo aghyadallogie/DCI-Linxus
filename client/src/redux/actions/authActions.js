@@ -1,4 +1,5 @@
-import { USER_LOADING, USER_LOADED, AUTH_ERROR, REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT_SUCCESS, LOGIN_FAIL, LOGIN_SUCCESS } from '../actions/types';
+import { patchUserRefs } from '../helpers/index';
+import { USER_LOADING, USER_LOADED, AUTH_ERROR, REGISTER_SUCCESS, REGISTER_FAIL, LOGOUT_SUCCESS, LOGIN_FAIL, LOGIN_SUCCESS, PATCH_REFS } from '../actions/types';
 import { helpRegisterUser } from '../helpers/index';
 import { helpLoginUser } from '../helpers/index';
 import { helpFetchMe } from '../helpers/index';
@@ -12,13 +13,11 @@ export const loadUser = () => async (dispatch, getState) => {
     if (token) {
         try {
             const response = await helpFetchMe(tokenConfig(token));
-            console.log('fetchin worked!', response.data);
             dispatch({
                 type: USER_LOADED,
                 payload: response.data
             });
         } catch (error) {
-            console.log('fetchin failed!');
             dispatch({
                 type: AUTH_ERROR
             });
@@ -88,4 +87,12 @@ export const tokenConfig = token => {
         config.headers['auth-token'] = token;  // try this on other objs
     }
     return config;
+}
+
+export const updateUserRefs = (updatedrefs, userId) => async dispatch => {
+    const response = await patchUserRefs(updatedrefs, userId);
+    dispatch({
+        type: PATCH_REFS,
+        payload: response.data
+    })
 }

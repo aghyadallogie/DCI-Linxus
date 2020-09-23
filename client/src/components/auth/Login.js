@@ -26,6 +26,8 @@ export default function Login(props) {
         backgroundImage: `url(${backgroundImage})`
       }}>
       <form onSubmit={handleSubmit(onSubmitForm)} className='form-login'>
+        <h3>Welcome back !</h3>
+        <h4 style={{paddingBottom: "40px", textAlign:"center"}}>Not a LinxUs user already? click on Sign up!</h4>
         <div className="input-field">
           <label htmlFor="email"></label>
           <input name="email" autoComplete="off" placeholder="Email" ref={register({
@@ -54,7 +56,7 @@ export default function Login(props) {
       <div className="register-new">
         <h3>New on LinxUs?</h3>
         <Link to="/register">
-          <a className='sign-up'>Sign up!</a>
+          <a className='sign-up' style={{fontSize:"26px", textDecoration: "underline"}}>Sign up!</a>
         </Link>
       </div>
     </div>

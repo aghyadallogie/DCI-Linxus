@@ -17,11 +17,3 @@ export const searchUsersAction = (A, B) => async dispatch => {
         payload: response.data
     })
 }
-
-export const updateUserRefs = (updatedrefs, userId) => async dispatch => {
-    const response = await patchUserRefs(updatedrefs, userId);
-    dispatch({
-        type: PATCH_REFS,
-        payload: response.data
-    })
-}

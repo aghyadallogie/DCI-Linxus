@@ -18,7 +18,7 @@ const mailRoute = require('./routes/mail');
 //Connect to DB
 const envconfig = require('./config/config');
 mongoose.connect(process.env.mongoURI,      // cannot use config here instead of dotenv
-    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false },
 ).then(() => console.log('Connected to DB !')).catch(err => console.log(err));
 
 

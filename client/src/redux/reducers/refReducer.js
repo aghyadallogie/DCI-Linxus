@@ -16,12 +16,6 @@ export default function (state = initialState, action) {
                 ...state,
                 filters: action.payload
             }
-        case PATCH_REFS:
-            console.log('yo yo', action.payload);
-            return {
-                ...state,
-                refs: action.payload
-            }
         default:
             return state;
     }

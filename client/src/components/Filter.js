@@ -42,7 +42,8 @@ export default function Filter(props) {
 
     return (
         <>
-            <div className="main">
+            <div className="main coll">
+                <h2 style={{paddingBottom: '50px'}}>Drag and drop the interests according to which you want to find contacts!</h2>
                 <DragNDrop />
             </div>
             <div className="results">

@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchRefsAction, updateUserRefs } from '../redux/actions/refActions';
+import { updateUserRefs } from '../redux/actions/authActions';
+import { fetchRefsAction } from '../redux/actions/refActions';
 import { STORE_FILTERS } from '../redux/actions/types';
+import { useHistory } from 'react-router-dom'
 
 function DragNDrop({ parent }) {
 
@@ -16,13 +18,17 @@ function DragNDrop({ parent }) {
         dispatch(fetchRefsAction())
     }, [])
 
+    const history = useHistory();
+
     const mainRefs = useSelector(state => state.ref.refs);
     const values = mainRefs.map(val => val.name);
+
+    // const restRefs = useSelector(state => state.auth.user.restRefs);
+    const loggedRefs = useSelector(state => state.auth.user.refs);
 
     useEffect(() => {
         if (parent === 'account') {
             setPool(untargetted);
-            // setPool(restRefs);
             setFilter(loggedRefs);
         } else {
             setPool(values);
@@ -30,8 +36,7 @@ function DragNDrop({ parent }) {
     }, [mainRefs]);
 
 
-    // const restRefs = useSelector(state => state.auth.user.restRefs);
-    const loggedRefs = useSelector(state => state.auth.user.refs);
+    
 
     const handleDragStart = (e, item, origin) => {
         dragItem.current = { item, origin };
@@ -90,6 +95,7 @@ function DragNDrop({ parent }) {
     const updateRefs = () => {
         if (filter.length > 0) {
             dispatch(updateUserRefs(filter, userId)); // dispatching type and payload inside this dispatched action
+            history.push('/filter');
         } else {
             setError('Please enter at least one interest!');
         }
@@ -100,7 +106,7 @@ function DragNDrop({ parent }) {
             <div className="drag-n-drop" onMouseEnter={() => findRef.current.focus()}>
                 <div className="pool-find">
                     <div className="find-ref">
-                        <input ref={findRef} className="input-box" type="text" name="" onChange={e => findRefs(e)} />
+                        <input ref={findRef} className="input-box" type="text" name="" onChange={e => findRefs(e)} placeholder="search interests" />
                         <button onClick={clearFindRefs}>clear!</button>
                     </div>
 
@@ -134,9 +140,9 @@ function DragNDrop({ parent }) {
                     )}
                 </div>
             </div>
-            <div>
+            <div className="mid">
                 {error && <p className="form-error" style={{ textAlign: "center" }}>{error}</p>}
-                {parent === 'account' && <button onClick={updateRefs} className='warning' style={{ marginBottom: '2rem' }} >Update</button>}
+                {parent === 'account' && <button onClick={updateRefs} className='warning' style={{ marginBottom: '2rem' }} >Save Changes</button>}
             </div>
         </div>
     )

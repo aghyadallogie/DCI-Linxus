@@ -6,10 +6,10 @@ import { registerAction } from '../redux/actions/authActions';
 export default function SignUpForm() {
 
     const [error, setError] = useState('');
-
     const { handleSubmit, register, errors } = useForm();
     const dispatch = useDispatch();
     const myRefs = useSelector(state => state.ref.filters);
+    const errorMsg = useSelector(state => state.auth.errorMsg);
 
     const onSubmitForm = values => {
         let registerData = {
@@ -54,6 +54,7 @@ export default function SignUpForm() {
                 {errors.password && <p className="form-error">At least 8 characters long!</p>}
             </div>
             {error && <p className="form-error" style={{ textAlign: "center" }}>{error}</p>}
+            {errorMsg && <p className="form-error" style={{ textAlign: "center" }}>{errorMsg}</p>}
             <button type="submit" className='warning' style={{ marginBottom: '2rem' }} >
                 Join Us!
             </button>

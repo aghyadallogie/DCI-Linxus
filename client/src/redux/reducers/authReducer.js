@@ -1,4 +1,4 @@
-import { USER_LOADED, USER_LOADING, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL, AUTH_ERROR } from '../actions/types';
+import { USER_LOADED, USER_LOADING, LOGIN_SUCCESS, LOGIN_FAIL, LOGOUT_SUCCESS, REGISTER_SUCCESS, REGISTER_FAIL, AUTH_ERROR, PATCH_REFS } from '../actions/types';
 
 const initialState = {
     isAuthenticated: false,
@@ -27,8 +27,6 @@ export default function (state = initialState, action) {
                 user: { ...state.user, ...action.payload },
                 errorMsg: ''
             };
-            console.clear()
-            console.log('state after loaded: ', loadedState);
             return loadedState;
         case LOGIN_SUCCESS:
         case REGISTER_SUCCESS:
@@ -42,7 +40,6 @@ export default function (state = initialState, action) {
                 isLoading: false,
                 errorMsg: '',
             };
-            console.log('state after loggedin: ', loggedState);
             return loggedState;
         case AUTH_ERROR:
         case LOGIN_FAIL:
@@ -51,7 +48,10 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 token: null,
-                user: null,
+                user: {
+                    refs: [],
+                    restRefs: [],
+                },
                 isAuthenticated: false,
                 isLoading: false,
                 errorMsg: action.payload
@@ -69,6 +69,14 @@ export default function (state = initialState, action) {
                 isLoading: false,
                 errorMsg: action.payload
             };
+        case PATCH_REFS:
+            return {
+                ...state,
+                user: {
+                    ...state.user,
+                    refs: action.payload
+                }
+            }
         default:
             return state;
     }
