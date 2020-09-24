@@ -16,21 +16,19 @@ export default function AppNavbar(props) {
         <div>
             <Navbar color="dark" dark expand="sm" className="mb-5" >
                 <Container>
-                    <NavbarBrand>
-                        <NavLink><Link to="/">LinxUs</Link></NavLink>
-                    </NavbarBrand>
+                    <Link to="/" style={{fontSize: "28px"}}>LinxUs</Link>
                     <NavbarToggler onClick={toggle} />
                     <Collapse isOpen={expand} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem style={{ display: 'flex' }}>
                                 {isAuthenticated ?
                                     <>
-                                        <NavLink><Link to="/logout">Logout</Link></NavLink>
-                                        <NavLink><Link to="/account">Account</Link></NavLink>
+                                        <Link className="hover-border" to="/account">Account</Link>
+                                        <Link className="hover-border ml-5" to="/logout">Logout</Link>
                                     </> :
                                     <>
-                                        <NavLink><Link to="/about">About LinxUs</Link></NavLink>
-                                        <NavLink><Link to="/login" className="ml-5">Login</Link></NavLink>
+                                        <Link className="hover-border" to="/about">About LinxUs</Link>
+                                        <Link className="hover-border ml-5" to="/login">Login</Link>
                                     </>}
                             </NavItem>
                         </Nav>

@@ -14,6 +14,17 @@ $detailColor:#DA513E;
 
 a {
   color: white;
+
+  &:hover {
+    color: white;
+    text-decoration: none;
+  }
+}
+
+.hover-border {
+  &:hover {
+    border-bottom: 2px solid $blue;
+  }
 }
 
 .app {
@@ -333,6 +344,14 @@ nav {
   text-align: left;
   font-family: "Nanum Gothic", sans-serif;
   padding-left: 0.5em;
+}
+
+.form-success {
+  color: rgb(25, 155, 46);
+  text-align: right;
+  font-family: "Nanum Gothic", sans-serif;
+  padding-left: 0.5em;
+  font-weight: 600;
 }
 
 .main-login {

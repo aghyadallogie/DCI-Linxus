@@ -17,7 +17,6 @@ export default function Login(props) {
   }
 
   const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
-  console.log('redirection now!', isAuthenticated);
   if (isAuthenticated) return <Redirect to="/filter" />
 
   return (
@@ -55,8 +54,7 @@ export default function Login(props) {
       </form>
       <div className="register-new">
         <h3>New on LinxUs?</h3>
-        <Link to="/register">
-          <a className='sign-up' style={{fontSize:"26px", textDecoration: "underline"}}>Sign up!</a>
+        <Link to="/register" className='sign-up' style={{fontSize:"26px", textDecoration: "underline"}}>Sign up!
         </Link>
       </div>
     </div>

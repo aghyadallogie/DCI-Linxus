@@ -27,9 +27,6 @@ export default function Account() {
             ).catch(err => console.log(err))
     }
 
-    console.log('rerendering')
-
-
     return (
         <div className="container flex-row">
             <div className="account-info">

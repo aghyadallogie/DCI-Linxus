@@ -39,9 +39,6 @@ router.post('/register', async (req, res) => {
         const srcPath = path.join(__dirname, '../public/uploads', 'user_0.jpg');
         const destPath = path.join(__dirname, '../public/uploads', savedUser._id + '.jpg');
 
-        console.log(srcPath);
-        console.log(destPath);
-
         fs.copyFileSync(srcPath, destPath);
 
         res.send({ _id: savedUser._id, token: token, refs: [...user.refs], restRefs });
