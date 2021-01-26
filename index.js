@@ -13,18 +13,24 @@ dotenv.config();
 const authRoute = require('./routes/auth');
 const referenceRoute = require('./routes/references');
 const usersRoute = require('./routes/users');
+const mailRoute = require('./routes/mail');
 
 //Connect to DB
 const envconfig = require('./config/config');
-mongoose.connect(process.env.mongoURI,
-    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true },
-    () => console.log('Connected to DB !')
-);
+mongoose.connect(process.env.mongoURI,      // cannot use config here instead of dotenv
+    { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false },
+).then(() => console.log('Connected to DB !')).catch(err => console.log(err));
+
 
 //Set Routes
 app.use('/api/auth', authRoute);
 app.use('/api/users', usersRoute);
 app.use('/api/references', referenceRoute);
+
+app.use('/api/mail', mailRoute);
+
+// define static dir
+app.use('/avatars', express.static('public/uploads'));
 
 //App port
 const port = envconfig.PORT || 5000;

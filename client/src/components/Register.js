@@ -1,41 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React from 'react';
 import DragNDrop from './DragNDrop';
 import SignUpForm from './SignUpForm';
+import backgroundImage from '../assets/backgroundImage.png'
 
-
-function Register(props) {
-
-    const [refs, setRefs] = useState(['asdf', 'fdsa', 'qwer']);
-    const [items, setItems] = useState([
-        { title: 'pool', items: [] },
-        { title: 'filter', items: [] }
-    ]);
-
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/references')
-            .then(res => {
-                let refs = res.data.map(ref => ref.name)
-                let targetArray = [
-                    { title: 'pool', items: [...refs] },
-                    { title: 'filter', items: [] }
-                ]
-                setItems(items => targetArray)
-            }).catch(err => console.log('error: ', err));
-    }, [])
-
+export default function Register(props) {
     return (
-        <div className="main">
-            <SignUpForm
-                refs={refs}
-                props={props}
-            />
-
-            <DragNDrop data={items}
-                setRefs={setRefs}
-            />
-        </div>
-    );
+        <>
+            <h3 style={{ textAlign: 'center' }}>Please enter your info then drag and drop your interests with which other users can find you !</h3>
+            <div className="main" style={{
+                backgroundImage: `url(${backgroundImage})`
+            }}>
+                <SignUpForm props={props} />
+                <DragNDrop />
+            </div >
+        </>
+    )
 }
-
-export default Register;

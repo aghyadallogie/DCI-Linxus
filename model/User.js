@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { array } = require("@hapi/joi");
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -11,20 +12,36 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
         unique: true,
-        max: 255, 
+        max: 255,
         min: 8
     },
     password: {
         type: String,
         required: true,
-        max: 1024, 
+        max: 1024,
         min: 8
     },
-    refs: [], // how to make this required?
+    refs: {
+        type: Array,
+        required: true,
+        min: 1,
+        max: 6
+    },
+    imageUrl: String,
     date: {
         type: Date,
         default: Date.now
     }
-});
+},
+    {   // removing password and __v from the returned data from api
+        toJSON: {
+            transform: function (doc, ret) {
+                delete ret.password;
+                delete ret.__v;
+            }
+        }
+    });
 
-module.exports = mongoose.model('User', userSchema);
+const User = mongoose.model('User', userSchema);
+
+module.exports = User;

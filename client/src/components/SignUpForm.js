@@ -1,37 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from "react-hook-form";
-import axios from 'axios';
+import { registerAction } from '../redux/actions/authActions';
 
-export default function SignUpForm({ refs, props }) {
+export default function SignUpForm() {
 
+    const [error, setError] = useState('');
     const { handleSubmit, register, errors } = useForm();
+    const dispatch = useDispatch();
+    const myRefs = useSelector(state => state.ref.filters);
+    const errorMsg = useSelector(state => state.auth.errorMsg);
 
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjMyZTMwYjc5NmFhYjBhZmM0ZjgwMDciLCJpYXQiOjE1OTcxNzA0ODV9.FlXz-nWVMzNt9gxRNXeQ7sxTYQrRLK2cnNYUon-yrm4"
-        }
-    };
-
-    const onSubmit = values => {
-        let targetObj = {
-            refs: [...refs],
+    const onSubmitForm = values => {
+        let registerData = {
+            refs: [...myRefs],
             ...values
         }
-        axios.post("http://localhost:5000/api/auth/register", targetObj, config)
-            .then(res => {
-                console.log(res);
-                props.history.push('/filter');
-            })
-            .catch(err => console.log(err))
+
+        if (myRefs.length > 0 && myRefs.length < 8) {
+            dispatch(registerAction(registerData)); // dispatching type and payload inside this dispatched action
+        } else {
+            setError('Your interests should be between 1 and 7!');
+        }
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-
+        <form onSubmit={handleSubmit(onSubmitForm)}>
             <div className="input-field">
                 <label htmlFor="name" ></label>
-                <input name="name" placeholder="Username" ref={register({
+                <input type="text" name="name" autoComplete="off" placeholder="Username" ref={register({
                     required: true, minLength: 8
                 })} />
                 {errors.name && <p className="form-error">At least 8 characters long!</p>}
@@ -39,7 +36,7 @@ export default function SignUpForm({ refs, props }) {
 
             <div className="input-field">
                 <label htmlFor="email"></label>
-                <input name="email" placeholder="Email" ref={register({
+                <input type="email" name="email" autoComplete="off" placeholder="Email" ref={register({
                     required: true, pattern: {
                         value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
                         message: "Invalid Email Address!"
@@ -51,13 +48,16 @@ export default function SignUpForm({ refs, props }) {
 
             <div className="input-field">
                 <label htmlFor="password" ></label>
-                <input type="text" name="password" placeholder="Password" ref={register({ // breaks why type="password" !!!!
+                <input type="password" name="password" autoComplete="off" placeholder="Password" ref={register({ // breaks why type="password" !!!!
                     required: true, minLength: 8
                 })} />
                 {errors.password && <p className="form-error">At least 8 characters long!</p>}
             </div>
-
-            <button type="submit">Join Us!</button>
+            {error && <p className="form-error" style={{ textAlign: "center" }}>{error}</p>}
+            {errorMsg && <p className="form-error" style={{ textAlign: "center" }}>{errorMsg}</p>}
+            <button type="submit" className='warning' style={{ marginBottom: '2rem' }} >
+                Join Us!
+            </button>
         </form>
     )
 }

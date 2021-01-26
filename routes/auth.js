@@ -1,7 +1,10 @@
 const router = require("express").Router();
 const User = require("../model/User");
+const Reference = require("../model/Reference");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const fs = require("fs");
+const path = require("path");
 const { registerValidation, loginValidation } = require("../validation/joi_validation");
 
 router.post('/register', async (req, res) => {
@@ -24,13 +27,27 @@ router.post('/register', async (req, res) => {
         email: req.body.email,
         password: hashPassword
     });
+
     try {
         const savedUser = await user.save();
-        res.send({ user: user._id });
+        const token = jwt.sign({ id: savedUser._id }, process.env.SECRET_TOKEN);
+
+        const rawRefs = await Reference.find();
+        const totalRefs = rawRefs.map(val => val.name);
+        const restRefs = totalRefs.filter(ref => !user.refs.includes(ref));
+
+        const srcPath = path.join(__dirname, '../public/uploads', 'user_0.jpg');
+        const destPath = path.join(__dirname, '../public/uploads', savedUser._id + '.jpg');
+
+        fs.copyFileSync(srcPath, destPath);
+
+        res.send({ _id: savedUser._id, token: token, refs: [...user.refs], restRefs });
     } catch (error) {
         res.status(400).send(error);
     }
 });
+
+// router.get('/me', authMiddleware, authController) //useEffect in appJs to check if logged in
 
 router.post('/login', async (req, res) => {
     //Validate input data using a separate joi validation file
@@ -41,10 +58,18 @@ router.post('/login', async (req, res) => {
     if (!user) return res.status(400).send('Email does not exist !')
     //Check if password is correct
     const validPassword = await bcrypt.compare(req.body.password, user.password);
-    if(!validPassword) return res.status(400).send('Invalid password !');
-    //Create and assign jwt
-    const token = jwt.sign({_id: user.id}, process.env.SECRET_TOKEN);
-    res.header('auth-token', token).send('Logged in using token: ' + token)
+    if (!validPassword) return res.status(400).send('Invalid password !');
+    try {
+        const token = jwt.sign({ id: user.id }, process.env.SECRET_TOKEN);
+
+        const rawRefs = await Reference.find();
+        const totalRefs = rawRefs.map(val => val.name);
+        const restRefs = totalRefs.filter(ref => !user.refs.includes(ref));
+
+        res.send({ _id: user._id, token: token, refs: [...user.refs], restRefs });
+    } catch (error) {
+        res.status(400).send(error);
+    }
 });
 
 module.exports = router;

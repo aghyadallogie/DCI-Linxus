@@ -1,29 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
 import DragNDrop from './DragNDrop';
+import { Button } from 'reactstrap';
+import { searchUsersAction } from '../redux/actions/refActions';
+import { Redirect } from 'react-router-dom';
 
 
-export default function Filter() {
+export default function Filter(props) {
 
-    const [results, setResults] = useState([]);
-    const [refs, setRefs] = useState(['asdf', 'fdsa', 'qwer']);
-    const [items, setItems] = useState([
-        { title: 'pool', items: [] },
-        { title: 'filter', items: [] }
-    ]);
-
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/references')
-            .then(res => {
-                let refs = res.data.map(ref => ref.name)
-                let targetArray = [
-                    { title: 'pool', items: [...refs] },
-                    { title: 'filter', items: [] }
-                ]
-                setItems(items => targetArray)
-            }).catch(err => console.log('error: ', err));
-    }, [])
+    const [error, setError] = useState('');
 
     const config = {
         headers: {
@@ -32,40 +17,39 @@ export default function Filter() {
         }
     };
 
+    const myRefs = useSelector(state => state.ref.filters);
+
+    const dispatch = useDispatch();
+
     const onSubmit = () => {
         let targetObj = {
-            refs: [...refs]
+            refs: [...myRefs]
         }
-        axios.post("http://localhost:5000/api/users/search", targetObj, config)
-            .then(res => {
-                console.log('refs', refs);
-                console.log(res);
-                setResults(res.data)
-            })
-            .catch(err => console.log(err))
+        try {
+            dispatch(searchUsersAction(targetObj, config));
+            if (myRefs.length > 0) {
+                props.history.push('/results');
+            } else {
+                setError('Please enter at least one interest!');
+            }
+        } catch (error) {
+            console.log(error); // does it make sense to use dispatch here as well ?
+        }
     }
+
+    const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+    if (!isAuthenticated) return <Redirect to="/" />
 
     return (
         <>
-            <div className="main">
-                <DragNDrop data={items}
-                    setRefs={setRefs}
-                />
+            <div className="main coll">
+                <h1 className="text-primary mb-4"> Find Contacts !</h1>
+                <h3 style={{ paddingBottom: '50px', marginBottom: '40px' }}>Drag and drop the interests according to which you want to find contacts!</h3>
+                <DragNDrop />
             </div>
             <div className="results">
-                <button onClick={onSubmit}>Find!</button>
-                <p>{results.length} found matching the targeted references!</p>
-                {/* {results.length > 0 ? <Link to="/results" className="button" >Results!</Link> : ''} */}
-            </div>
-            <div className="results-table">
-                {results.map(result =>
-                    <div className="result-row" key={result.email}>
-                        <div className="no-overflow">
-                            <img className="avatar" src="https://kooledge.com/assets/default_medium_avatar-57d58da4fc778fbd688dcbc4cbc47e14ac79839a9801187e42a796cbd6569847.png" />
-                            <p>{result.name}</p>
-                        </div>
-                        <img className="avatar" src="https://maxcdn.icons8.com/Share/icon/p1em/Messaging/message1600.png" />
-                    </div>)}
+                {error && <p className="form-error" style={{ textAlign: "center" }}>{error}</p>}
+                <button className="warning mt-0" onClick={onSubmit}>Find!</button>
             </div>
         </>
     );

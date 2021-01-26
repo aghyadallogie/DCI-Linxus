@@ -1,32 +1,45 @@
-import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Nav from './components/layout/Nav';
-import Home from './components/layout/Home';
-import About from './components/layout/About';
-import Contact from './components/layout/Contact';
-import Results from './components/Results';
-import Filter from './components/Filter';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './App.scss';
+import { loadUser } from './redux/actions/authActions';
+import AppNavbar from './components/layout/AppNavbar';
 import Register from './components/Register';
-import Login from './components/Login';
-import './App.css';
+import Filter from './components/Filter';
+import Results from './components/Results';
+import Home from './components/layout/Home';
+import Login from './components/auth/Login';
+import About from './components/layout/About';
+import Account from './components/Account';
+import Logout from './components/auth/Logout';
 
 export default function App() {
 
-  return (
-    <Router>
-      <div className='App'>
-        <Nav />
-        <Switch>
-          <Route path="/" exact component={Home} />
-          <Route path="/about" component={About} />
-          <Route path="/contact" component={Contact} />
-          <Route path="/results" component={Results} />
-          <Route path="/filter" component={Filter} />
-          <Route path="/register" component={Register} />
-          <Route path="/login" component={Login} />
-        </Switch>
-      </div>
-    </Router>
+  const dispatch = useDispatch();
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
 
+  useEffect(() => {
+    dispatch(loadUser());
+  }, [])
+
+  return (
+    <div className="App">
+      <AppNavbar />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/about" component={About} />
+        <Route path="/logout" component={Logout} />
+        {isAuthenticated && <Route path="/filter" component={Filter} />}
+        {isAuthenticated && <Route path="/account" component={Account} />}
+        {isAuthenticated && <Route path="/results" component={Results} />}
+        {!isAuthenticated && <Route exact path="/login" component={Login} />}
+        {!isAuthenticated && <Route exact path="/register" component={Register} />}
+        {/* Redirect all */}
+        <Route path="/*">
+          <Redirect to="/" />
+        </Route>
+      </Switch>
+    </div>
   );
 }
